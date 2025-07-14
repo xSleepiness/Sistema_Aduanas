@@ -1,0 +1,32 @@
+<!-- Logo temporal de Aduanas Chile hasta que guardes la imagen real -->
+<svg width="300" height="80" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .texto-chile { font-family: Arial, sans-serif; font-weight: bold; }
+      .texto-aduanas { font-family: Arial, sans-serif; font-weight: bold; }
+      .texto-customs { font-family: Arial, sans-serif; font-weight: normal; }
+    </style>
+  </defs>
+  
+  <!-- Fondo blanco -->
+  <rect width="300" height="80" fill="white"/>
+  
+  <!-- Texto CHILE -->
+  <text x="50" y="25" class="texto-chile" font-size="14" fill="#e74c3c">CHILE</text>
+  
+  <!-- Texto ADUANAS -->
+  <text x="50" y="45" class="texto-aduanas" font-size="20" fill="#2c3e50">ADUANAS</text>
+  
+  <!-- Texto CUSTOMS -->
+  <text x="50" y="60" class="texto-customs" font-size="10" fill="#2c3e50">CUSTOMS</text>
+  
+  <!-- Escudo simplificado -->
+  <g transform="translate(220, 40)">
+    <circle cx="0" cy="0" r="25" fill="#2c3e50" stroke="#e74c3c" stroke-width="2"/>
+    <polygon points="0,-12 6,0 0,12 -6,0" fill="#e74c3c"/>
+    <circle cx="0" cy="0" r="8" fill="none" stroke="#e74c3c" stroke-width="1"/>
+  </g>
+  
+  <!-- Línea decorativa -->
+  <rect x="50" y="70" width="150" height="2" fill="#e74c3c"/>
+</svg>

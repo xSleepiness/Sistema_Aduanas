@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - Aduanas de Chile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #f4f6fa;
+    }
+
+    nav {
+      background-color: #003366;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      flex-wrap: wrap;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .navbar-left img {
+      height: 40px;
+    }
+
+    .navbar-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    .navbar-links a:hover {
+      color: #ffcc00;
+    }
+
+    .navbar-search input {
+      padding: 6px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    .navbar-icons button {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: white;
+      margin-left: 10px;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    section {
+      flex: 1 1 420px;
+      max-width: 520px;
+      background: white;
+      border-radius: 10px;
+      padding: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      border: 2px solid #003366;
+      margin: 10px;
+    }
+
+    h2 {
+      color: #003366;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .quick-actions button {
+      flex: 1;
+      padding: 10px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .quick-actions button:hover {
+      background-color: #0055a5;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 30px;
+      background: #002244;
+      color: #fff;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .footer-content section {
+      flex: 1 1 300px;
+    }
+
+    .footer-social img {
+      width: 30px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 768px) {
+      nav, .footer-content {
+        flex-direction: column; 
+        align-items: center;
+      }
+
+      .navbar-links {
+        margin-top: 10px;
+      }
+
+      .quick-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="navbar-left">
+      <img src="logo_aduanas.png" alt="Logo Aduanas de Chile">
+      <div class="navbar-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Reserva.html">Reserva</a>
+        <a href="Declaracion.html">Declaración</a>
+        <a href="Pagos.html">Pagos</a>
+        <a href="Tramites.html">Trámites</a>
+        <a href="Documentos.html">Documentos</a>
+      </div>
+    </div>
+    <div class="navbar-search">
+      <input type="text" placeholder="Buscar...">
+    </div>
+    <div class="navbar-icons">
+      <button title="Notificaciones">🔔</button>
+      <button title="Perfil" onclick="window.location.href='perfil.html'">👤</button>
+    </div>
+  </nav>
+
+  <!-- Apartados principales -->
+  <main>
+    <!-- Noticias -->
+    <section>
+      <h2>📰 Noticias</h2>
+      <ul>
+        <li><strong>13/07/2025:</strong> Nueva plataforma digital para trámites aduaneros.</li>
+        <li><strong>10/07/2025:</strong> Aduanas refuerza controles en frontera norte.</li>
+        <li><strong>05/07/2025:</strong> Actualización de tarifas de importación.</li>
+      </ul>
+    </section>
+
+    <!-- Normativas -->
+    <section>
+      <h2>📚 Normativas</h2>
+      <ul>
+        <li>Resolución N°1234: Nuevos requisitos para importaciones.</li>
+        <li>Decreto Supremo N°567: Cambios en declaración jurada.</li>
+        <li>Norma General N°89: Procedimientos de pago electrónico.</li>
+      </ul>
+    </section>
+
+    <!-- Acciones Rápidas -->
+    <section>
+      <h2>⚡ Acceso Rápido</h2>
+      <div class="quick-actions">
+        <button onclick="window.location.href='Reserva.html'">Reservar Hora</button>
+        <button onclick="window.location.href='Declaracion.html'">Nueva Declaración</button>
+        <button onclick="window.location.href='Pagos.html'">Realizar Pago</button>
+        <button onclick="window.location.href='documentos.html'">Subir Documento</button>
+      </div>
+    </section>
+
+    <!-- Clima o Estado -->
+    <section>
+      <h2>☀️ Clima Santiago</h2>
+      <p>Parcialmente nublado, 17°C</p>
+      <small>Actualizado hace 5 minutos</small>
+    </section>
+  </main>
+
+    <!-- Información y redes sociales en el pie de página -->
+    <footer>
+        <div class="footer-content">
+            <!-- Información -->
+            <section>
+                <h2 style="color: #003366;">Información</h2>
+                <ul style="color: #111;">
+                    <li>Horarios de atención: Lunes a viernes, 9:00 a 17:00 hrs.</li>
+                    <li>Contacto: info@aduana.cl / +56 2 2345 6789</li>
+                    <li>Dirección: Av. Aduana 1234, Santiago, Chile</li>
+                </ul>
+            </section>
+            <!-- Redes sociales -->
+            <section class="footer-social">
+                <h2>Síguenos</h2>
+                <!-- Cambia los src por tus imágenes o usa enlaces externos -->
+                <a href="#" title="Facebook">
+                    <img src="facebook.webp" alt="Facebook">
+                </a>
+                <a href="#" title="Twitter">
+                    <img src="twitter.webp" alt="Twitter" style="width: 40px; height: 30px; margin-right: 10px;">
+                </a>
+                <a href="#" title="Instagram">
+                    <img src="instagram.png" alt="Instagram" style="width: 44px; height: 28px; margin-right: 10px;">
+                </a>
+                <a href="#" title="YouTube">
+                    <img src="youtube.png" alt="YouTube">
+                </a>
+            </section>
+        </div>
+    </footer>
+</body>
+</html>

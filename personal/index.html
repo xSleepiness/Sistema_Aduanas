@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Aduanas - Reserva de Horarios</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Superior con logo de Aduanas Chile -->
+    <div class="top-header">
+        <div class="container">
+            <div class="top-header-content">
+                <img src="images/aduanas-logo-temp.svg" alt="Aduanas Chile" class="aduanas-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header de navegación -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Sistema de Aduanas Nacional</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Sistema de Aduanas Nacional</h2>
+                <p>Acceda a los servicios según su tipo de usuario</p>
+                
+                <!-- Selector de Tipo de Usuario -->
+                <div class="user-type-selector">
+                    <div class="user-option" onclick="goToCitizenPortal()">
+                        <i class="fas fa-user"></i>
+                        <h3>Ciudadano</h3>
+                        <p>Reservas, turismo y trámites generales</p>
+                        <button class="btn-secondary">Acceder</button>
+                    </div>
+                    
+                    <div class="user-option" onclick="console.log('Click en funcionario'); showLoginModal();">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>Funcionario</h3>
+                        <p>Panel administrativo y gestión</p>
+                        <button class="btn-secondary">Iniciar Sesión</button>
+                    </div>
+                </div>
+                
+                <!-- Acceso Rápido para Pruebas -->
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 2px dashed #6c757d;">
+                    <h4 style="color: #495057; margin-bottom: 20px;">🧪 Panel de Pruebas - Acceso Rápido</h4>
+                    
+                    <!-- Acceso Ciudadanos -->
+                    <div style="margin-bottom: 20px;">
+                        <h5 style="color: #6c757d; margin-bottom: 10px;">👥 Portal Ciudadanos</h5>
+                        <button onclick="goToCitizenPortal()" class="btn-primary" style="background: #007bff; margin: 5px;">
+                            🏛️ Acceder como Ciudadano
+                        </button>
+                    </div>
+                    
+                    <!-- Acceso Funcionarios -->
+                    <div style="margin-bottom: 15px;">
+                        <h5 style="color: #6c757d; margin-bottom: 10px;">👨‍💼 Portal Funcionarios</h5>
+                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="loginAsAdmin()" class="btn-primary" style="background: #28a745; font-size: 14px;">
+                            👨‍💼 Entrar como Administrador
+                        </button>
+                        <button onclick="loginAsSupervisor()" class="btn-primary" style="background: #17a2b8; font-size: 14px;">
+                            👮‍♀️ Entrar como Supervisor
+                        </button>
+                        <button onclick="loginAsInspector()" class="btn-primary" style="background: #ffc107; color: #212529; font-size: 14px;">
+                            🔍 Entrar como Inspector
+                        </button>
+                        <button onclick="showLoginModal()" class="btn-primary" style="background: #dc3545; font-size: 14px;">
+                            🔐 Login Manual
+                        </button>
+                        <button onclick="testEmployeeLogin()" class="btn-primary" style="background: #6f42c1; font-size: 14px;">
+                            🧪 Probar Login
+                        </button>
+                        <button onclick="debugLoginSystem()" class="btn-primary" style="background: #fd7e14; font-size: 14px;">
+                            🐛 Debug Login
+                        </button>
+                    </div>
+                    
+                    <!-- Información útil -->
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-top: 15px;">
+                        <h6 style="color: #856404; margin: 0 0 8px 0;">ℹ️ Credenciales de Prueba</h6>
+                        <div style="font-size: 12px; color: #856404; text-align: left;">
+                            <strong>Funcionarios disponibles:</strong><br>
+                            • Admin: <strong>ADMIN</strong> / admin2025 / Administración<br>
+                            • Supervisor: <strong>FUN001</strong> / fun2025 / Control Migratorio<br>
+                            • Inspector: <strong>FUN002</strong> / inspector2025 / Inspección<br>
+                            • Supervisor 2: <strong>SUP001</strong> / sup2025 / Administración
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 12px; color: #6c757d; margin-top: 10px;">
+                        <em>Solo para pruebas - Remover en producción</em>
+                    </p>
+                </div>
+                
+                <!-- Panel de Debugging -->
+                <div class="card" style="margin-top: 20px; border-left: 4px solid #28a745;">
+                    <h3 style="color: #28a745; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-bug"></i> Panel de Debugging
+                    </h3>
+                    <p style="margin-bottom: 15px; color: #666;">Herramientas para probar y debuggear el sistema</p>
+                    
+                    <div class="debug-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                        <button onclick="testVehicleSystem()" class="btn-primary" style="background: #28a745; font-size: 12px; padding: 8px 12px;">
+                            🚗 Probar Vehículos
+                        </button>
+                        <button onclick="debugVehicles()" class="btn-primary" style="background: #17a2b8; font-size: 12px; padding: 8px 12px;">
+                            🔍 Debug Vehículos
+                        </button>
+                        <button onclick="showVehicleStats()" class="btn-primary" style="background: #ffc107; color: #212529; font-size: 12px; padding: 8px 12px;">
+                            📊 Ver Estadísticas
+                        </button>
+                        <button onclick="clearTestData()" class="btn-primary" style="background: #dc3545; font-size: 12px; padding: 8px 12px;">
+                            🗑️ Limpiar Datos
+                        </button>
+                    </div>
+                    
+                    <!-- Información del sistema -->
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin-top: 15px; font-size: 11px;">
+                        <div id="systemStatus" style="color: #666;">
+                            <div>📊 Estado del Sistema: <span id="statusIndicator">Verificando...</span></div>
+                            <div>🚗 Vehículos registrados: <span id="vehicleCount">-</span></div>
+                            <div>📄 Documentos registrados: <span id="documentCount">-</span></div>
+                            <div>⏰ Última actualización: <span id="lastUpdate">-</span></div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 10px; color: #6c757d; margin-top: 10px;">
+                        <em>⚠️ Panel de desarrollo - Usar F12 para ver logs detallados</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios Section -->
+    <section id="servicios" class="services">
+        <div class="container">
+            <h2>Servicios Disponibles</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-file-import"></i>
+                    <h3>Importaciones</h3>
+                    <p>Gestión completa de procesos de importación</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-file-export"></i>
+                    <h3>Exportaciones</h3>
+                    <p>Tramitación de documentos de exportación</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Certificaciones</h3>
+                    <p>Obtención de certificados aduaneros</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-search"></i>
+                    <h3>Consultas</h3>
+                    <p>Información sobre trámites y regulaciones</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-plane"></i>
+                    <h3>Gestión Turística</h3>
+                    <p>Servicios especiales para turistas</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-child"></i>
+                    <h3>Permisos de Menores</h3>
+                    <p>Autorización para menores de edad</p>
+                </div>
+            </div>
+            
+            <div class="service-access">
+                <p>Para acceder a estos servicios, seleccione su tipo de usuario:</p>
+                <div class="access-buttons">
+                    <button onclick="goToCitizenPortal()" class="btn-primary">Portal Ciudadano</button>
+                    <button onclick="showLoginModal()" class="btn-primary">Portal Funcionario</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Información de Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Dirección</h3>
+                        <p>Av. Libertador Bernardo O'Higgins 1449, Santiago, Chile</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h3>Teléfono</h3>
+                        <p>+56 2 2828 7000</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>contacto@aduana.cl</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Horario de Atención</h3>
+                        <p>Lunes - Viernes: 8:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Sistema de Aduanas Nacional. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Reserva Confirmada</h3>
+            </div>
+            <div class="modal-body">
+                <p>Su cita ha sido reservada exitosamente.</p>
+                <div class="confirmation-details" id="confirmationDetails">
+                    <!-- Detalles de confirmación se llenarán dinámicamente -->
+                </div>
+                <p class="confirmation-note">
+                    Se ha enviado un email de confirmación a su dirección de correo.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login para Funcionarios -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content login-modal">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-user-shield"></i>
+                <h3>Acceso para Funcionarios</h3>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="employeeId">ID de Funcionario *</label>
+                        <input type="text" id="employeeId" name="employeeId" required placeholder="Ingrese su ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña *</label>
+                        <input type="password" id="password" name="password" required placeholder="Ingrese su contraseña">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department">Departamento *</label>
+                        <select id="department" name="department" required>
+                            <option value="">Seleccione su departamento</option>
+                            <option value="control-migratorio">Control Migratorio</option>
+                            <option value="inspeccion-equipaje">Inspección de Equipaje</option>
+                            <option value="documentacion">Documentación</option>
+                            <option value="supervision">Supervisión</option>
+                            <option value="administracion">Administración</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                </form>
+                
+                <div class="login-help">
+                    <p><small>¿Olvidó su contraseña? Contacte al administrador del sistema.</small></p>
+                    <div class="demo-credentials">
+                        <h4>Credenciales de Prueba:</h4>
+                        <p><strong>ID:</strong> ADMIN | <strong>Contraseña:</strong> admin2025 | <strong>Depto:</strong> Administración</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Administración (oculto inicialmente) -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <div class="admin-header">
+            <div class="admin-user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="loggedUserName">Funcionario</span>
+                <span id="loggedUserDept">Departamento</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-sidebar">
+                <ul class="admin-menu">
+                    <li><a href="#" onclick="showAdminSection('dashboard')" class="active">
+                        <i class="fas fa-tachometer-alt"></i> Panel Principal
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('appointments')">
+                        <i class="fas fa-calendar-check"></i> Citas del Día
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('tourism')">
+                        <i class="fas fa-plane"></i> Gestión Turística
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('minors')">
+                        <i class="fas fa-child"></i> Permisos de Menores
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('reports')">
+                        <i class="fas fa-chart-bar"></i> Reportes
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('settings')">
+                        <i class="fas fa-cog"></i> Configuración
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="admin-main">
+                <!-- Dashboard -->
+                <div class="admin-section" id="dashboard">
+                    <h2>Panel Principal</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-day"></i>
+                            <div class="stat-info">
+                                <h3 id="todayAppointments">0</h3>
+                                <p>Citas Hoy</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-plane"></i>
+                            <div class="stat-info">
+                                <h3 id="touristRequests">0</h3>
+                                <p>Solicitudes Turísticas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-child"></i>
+                            <div class="stat-info">
+                                <h3 id="minorPermits">0</h3>
+                                <p>Permisos de Menores</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-info">
+                                <h3 id="pendingRequests">0</h3>
+                                <p>Pendientes</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h3>Actividad Reciente</h3>
+                        <div class="activity-list" id="recentActivity">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Citas del Día -->
+                <div class="admin-section" id="appointments" style="display: none;">
+                    <h2>Citas del Día</h2>
+                    <div class="appointments-table">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Servicio</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Gestión Turística -->
+                <div class="admin-section" id="tourism" style="display: none;">
+                    <h2>Gestión Turística</h2>
+                    <div class="tourism-requests">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Turista</th>
+                                    <th>Nacionalidad</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tourismTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Permisos de Menores -->
+                <div class="admin-section" id="minors" style="display: none;">
+                    <h2>Permisos de Menores</h2>
+                    <div class="minors-requests">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Menor</th>
+                                    <th>Edad</th>
+                                    <th>Acompañante</th>
+                                    <th>Destino</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="minorsTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Reportes -->
+                <div class="admin-section" id="reports" style="display: none;">
+                    <h2>Reportes y Estadísticas</h2>
+                    <div class="reports-content">
+                        <div class="report-filters">
+                            <div class="form-group">
+                                <label for="reportType">Tipo de Reporte</label>
+                                <select id="reportType">
+                                    <option value="daily">Diario</option>
+                                    <option value="weekly">Semanal</option>
+                                    <option value="monthly">Mensual</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reportDate">Fecha</label>
+                                <input type="date" id="reportDate">
+                            </div>
+                            <button class="btn-primary" onclick="generateReport()">Generar Reporte</button>
+                        </div>
+                        
+                        <div class="report-results" id="reportResults">
+                            <!-- Resultados del reporte -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Configuración -->
+                <div class="admin-section" id="settings" style="display: none;">
+                    <h2>Configuración del Sistema</h2>
+                    <div class="settings-content">
+                        <div class="setting-group">
+                            <h3>Horarios de Atención</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="openTime">Hora de Apertura</label>
+                                    <input type="time" id="openTime" value="09:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="closeTime">Hora de Cierre</label>
+                                    <input type="time" id="closeTime" value="16:30">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <h3>Configuración de Citas</h3>
+                            <div class="form-group">
+                                <label for="slotDuration">Duración de Cita (minutos)</label>
+                                <select id="slotDuration">
+                                    <option value="15">15 minutos</option>
+                                    <option value="30" selected>30 minutos</option>
+                                    <option value="45">45 minutos</option>
+                                    <option value="60">60 minutos</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary" onclick="saveSettings()">Guardar Configuración</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/calendar.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/tourism.js"></script>
+    <script src="js/minors.js"></script>
+    <script src="js/audit.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Funciones de navegación y login para index.html
+        
+        // Función para ir al portal ciudadano
+        function goToCitizenPortal() {
+            console.log('🏛️ Navegando al portal ciudadano...');
+            window.location.href = 'citizen-portal.html';
+        }
+        
+        // Función para mostrar el modal de login
+        function showLoginModal() {
+            console.log('🔓 Mostrando modal de login...');
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'block';
+            } else {
+                console.error('❌ No se encontró el modal de login');
+            }
+        }
+        
+        // Función para cerrar el modal de login
+        function closeLoginModal() {
+            console.log('🔒 Cerrando modal de login...');
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Función para cerrar cualquier modal
+        function closeModal() {
+            console.log('🔒 Cerrando modal...');
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+        
+        // Función para probar el login de funcionarios
+        function testEmployeeLogin() {
+            console.log('🧪 Probando login de funcionarios...');
+            
+            // Abrir modal
+            showLoginModal();
+            
+            // Rellenar con credenciales de prueba
+            setTimeout(() => {
+                document.getElementById('employeeId').value = 'FUN001';
+                document.getElementById('password').value = 'fun2025';
+                document.getElementById('department').value = 'administracion';
+                
+                console.log('✅ Formulario rellenado con credenciales de prueba');
+                alert('🧪 Formulario rellenado con credenciales de prueba.\n\nPuede hacer clic en "Iniciar Sesión" para probar.');
+            }, 500);
+        }
+        
+        // Función para debug del sistema de login
+        function debugLoginSystem() {
+            console.log('🐛 DEBUG - Sistema de Login');
+            console.log('============================');
+            
+            // Verificar elementos del DOM
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const employeeIdField = document.getElementById('employeeId');
+            const passwordField = document.getElementById('password');
+            const departmentField = document.getElementById('department');
+            
+            console.log('Elementos del DOM:');
+            console.log('- loginModal:', !!loginModal);
+            console.log('- loginForm:', !!loginForm);
+            console.log('- employeeIdField:', !!employeeIdField);
+            console.log('- passwordField:', !!passwordField);
+            console.log('- departmentField:', !!departmentField);
+            
+            // Verificar event listeners
+            if (loginForm) {
+                console.log('- Formulario tiene event listener:', loginForm.onsubmit !== null);
+            }
+            
+            // Verificar funciones disponibles
+            console.log('Funciones disponibles:');
+            console.log('- showLoginModal:', typeof showLoginModal);
+            console.log('- closeLoginModal:', typeof closeLoginModal);
+            console.log('- handleFormLogin:', typeof handleFormLogin);
+            
+            console.log('============================');
+        }
+        
+        // Funciones de login rápido
+        function loginAsAdmin() {
+            console.log('👨‍💼 Login rápido como Administrador...');
+            const sessionData = {
+                user: {
+                    id: 'ADMIN',
+                    name: 'Administrador del Sistema',
+                    department: 'Administración',
+                    role: 'administrador',
+                    email: 'admin@aduanas.gov'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000) // 8 horas
+            };
+            
+            localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+            console.log('✅ Sesión de administrador creada');
+            window.location.href = 'admin-portal.html';
+        }
+        
+        function loginAsSupervisor() {
+            console.log('👮‍♀️ Login rápido como Supervisor...');
+            const sessionData = {
+                user: {
+                    id: 'FUN001',
+                    name: 'María González',
+                    department: 'Control Migratorio',
+                    role: 'supervisor',
+                    email: 'maria.gonzalez@aduanas.gov'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000) // 8 horas
+            };
+            
+            localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+            console.log('✅ Sesión de supervisor creada');
+            window.location.href = 'admin-portal.html';
+        }
+        
+        function loginAsInspector() {
+            console.log('🔍 Login rápido como Inspector...');
+            const sessionData = {
+                user: {
+                    id: 'FUN002',
+                    name: 'Carlos Rodríguez',
+                    department: 'Inspección de Equipaje',
+                    role: 'inspector',
+                    email: 'carlos.rodriguez@aduanas.gov'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000) // 8 horas
+            };
+            
+            localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+            console.log('✅ Sesión de inspector creada');
+            window.location.href = 'admin-portal.html';
+        }
+        
+        // Funciones de debugging para el panel principal
+        function testVehicleSystem() {
+            console.log('🚗 Probando sistema de vehículos...');
+            alert('🚗 Sistema de vehículos funcionando correctamente.\n\nPuede acceder al portal de funcionarios para gestionar vehículos.');
+        }
+        
+        function debugVehicles() {
+            console.log('🔍 Debug de vehículos...');
+            const vehicles = JSON.parse(localStorage.getItem('aduanasVehicles') || '[]');
+            console.log('Vehículos en localStorage:', vehicles);
+            alert(`🔍 Debug de Vehículos:\n\nVehículos en localStorage: ${vehicles.length}\nVer consola (F12) para más detalles.`);
+        }
+        
+        function showVehicleStats() {
+            console.log('📊 Mostrando estadísticas de vehículos...');
+            const vehicles = JSON.parse(localStorage.getItem('aduanasVehicles') || '[]');
+            const stats = {
+                total: vehicles.length,
+                registered: vehicles.filter(v => v.status === 'registered').length,
+                pending: vehicles.filter(v => v.status === 'pending').length,
+                approved: vehicles.filter(v => v.status === 'approved').length,
+                rejected: vehicles.filter(v => v.status === 'rejected').length
+            };
+            
+            alert(`📊 Estadísticas de Vehículos:\n\nTotal: ${stats.total}\nRegistrados: ${stats.registered}\nPendientes: ${stats.pending}\nAprobados: ${stats.approved}\nRechazados: ${stats.rejected}`);
+        }
+        
+        function clearTestData() {
+            console.log('🗑️ Limpiando datos de prueba...');
+            if (confirm('¿Está seguro de que desea limpiar todos los datos de prueba?')) {
+                localStorage.removeItem('aduanasVehicles');
+                localStorage.removeItem('aduanasDocuments');
+                localStorage.removeItem('aduanasReservations');
+                localStorage.removeItem('aduanasAuditLog');
+                localStorage.removeItem('aduanasTourism');
+                localStorage.removeItem('aduanasMinors');
+                
+                updateSystemStatus();
+                alert('🗑️ Datos de prueba limpiados correctamente.');
+                console.log('✅ Datos de prueba eliminados');
+            }
+        }
+        
+        // Función para actualizar el estado del sistema
+        function updateSystemStatus() {
+            console.log('🔄 Actualizando estado del sistema...');
+            
+            const statusIndicator = document.getElementById('statusIndicator');
+            const vehicleCount = document.getElementById('vehicleCount');
+            const documentCount = document.getElementById('documentCount');
+            const lastUpdate = document.getElementById('lastUpdate');
+            
+            if (statusIndicator) statusIndicator.textContent = '✅ Funcionando';
+            
+            if (vehicleCount) {
+                const vehicles = JSON.parse(localStorage.getItem('aduanasVehicles') || '[]');
+                vehicleCount.textContent = vehicles.length;
+            }
+            
+            if (documentCount) {
+                const documents = JSON.parse(localStorage.getItem('aduanasDocuments') || '[]');
+                documentCount.textContent = documents.length;
+            }
+            
+            if (lastUpdate) {
+                lastUpdate.textContent = new Date().toLocaleString('es-ES');
+            }
+        }
+        
+        // Función para cerrar modales al hacer clic fuera
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Función para cerrar modales con Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeLoginModal();
+            }
+        });
+        
+        // Función para manejar el login del formulario
+        function handleFormLogin(event) {
+            event.preventDefault();
+            console.log('🔓 Procesando login del formulario...');
+            
+            const employeeId = document.getElementById('employeeId').value;
+            const password = document.getElementById('password').value;
+            const department = document.getElementById('department').value;
+            
+            console.log('📝 Datos del formulario:', { employeeId, department });
+            
+            // Validar credenciales básicas
+            if (!employeeId || !password || !department) {
+                alert('Por favor complete todos los campos requeridos.');
+                return;
+            }
+            
+            // Credenciales de prueba
+            const validCredentials = [
+                { id: 'ADMIN', password: 'admin2025', name: 'Administrador del Sistema', role: 'administrador' },
+                { id: 'FUN001', password: 'fun2025', name: 'María González', role: 'supervisor' },
+                { id: 'FUN002', password: 'inspector2025', name: 'Carlos Rodríguez', role: 'inspector' },
+                { id: 'SUP001', password: 'sup2025', name: 'Ana Martínez', role: 'supervisor' }
+            ];
+            
+            const user = validCredentials.find(cred => 
+                cred.id === employeeId && cred.password === password
+            );
+            
+            if (user) {
+                console.log('✅ Login exitoso para:', user.name);
+                
+                // Crear sesión
+                const sessionData = {
+                    user: {
+                        id: user.id,
+                        name: user.name,
+                        department: department,
+                        role: user.role,
+                        email: `${user.id.toLowerCase()}@aduanas.cl`
+                    },
+                    loginTime: new Date().toISOString(),
+                    expiry: Date.now() + (8 * 60 * 60 * 1000) // 8 horas
+                };
+                
+                localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+                
+                // Cerrar modal
+                closeLoginModal();
+                
+                // Mostrar notificación de éxito
+                alert(`¡Bienvenido ${user.name}!\n\nRedirigiendo al portal de administración...`);
+                
+                // Redirigir al portal
+                setTimeout(() => {
+                    window.location.href = 'admin-portal.html';
+                }, 1000);
+                
+            } else {
+                console.log('❌ Login fallido para:', employeeId);
+                alert('Credenciales incorrectas. Por favor verifique su ID y contraseña.\n\nCredenciales de prueba:\nADMIN / admin2025\nFUN001 / fun2025\nFUN002 / inspector2025\nSUP001 / sup2025');
+            }
+        }
+        
+        // Inicializar el sistema cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Iniciando sistema principal...');
+            
+            // Configurar el formulario de login
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleFormLogin);
+                console.log('✅ Formulario de login configurado');
+            } else {
+                console.warn('⚠️ No se encontró el formulario de login');
+            }
+            
+            // Actualizar estado del sistema
+            updateSystemStatus();
+            
+            // Configurar interval para actualizar cada 30 segundos
+            setInterval(updateSystemStatus, 30000);
+            
+            // Inicializar sistemas si están disponibles
+            if (typeof window.AdminSystem !== 'undefined') {
+                console.log('🔧 Inicializando AdminSystem...');
+                window.adminSystem = new AdminSystem();
+            }
+            
+            if (typeof window.AduanasSystem !== 'undefined') {
+                console.log('🔧 Inicializando AduanasSystem...');
+                window.aduanasSystem = new AduanasSystem();
+            }
+            
+            // Inicializar sistema de auditoría si está disponible
+            if (typeof window.AuditSystem !== 'undefined') {
+                console.log('🔧 Inicializando AuditSystem...');
+                window.auditSystem = new AuditSystem();
+                
+                // Registrar acceso a la página principal
+                window.auditSystem.registerPageAccess('main', null);
+            }
+            
+            console.log('✅ Sistema principal inicializado');
+        });
+    </script>
+</body>
+</html>

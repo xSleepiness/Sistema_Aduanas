@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control Aduanero - SAG/PDI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        
+        body, html {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e9ecef 0%, #f8f9fa 100%);
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            color: #222;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            max-width: 440px;
+            width: 100%;
+            margin: 48px auto;
+            padding: 40px 36px 32px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1.5px solid #e3e7ee;
+        }
+
+        .logo-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .logo-aduana {
+            max-width: 120px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 1.7rem;
+            color: #0d3d6a;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: #0d3d6a;
+            font-weight: 600;
+            margin: 20px 0 10px 0;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 500;
+            color: #223;
+            margin-bottom: 2px;
+            width: 100%;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            border: 1.5px solid #cfd8dc;
+            border-radius: 7px;
+            font-size: 1rem;
+            background: #f7fafc;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #1976d2;
+            outline: none;
+            background: #fff;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            accent-color: #1976d2;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 18px;
+            gap: 12px;
+        }
+
+        button {
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 28px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        button.enviar {
+            background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+            color: #fff;
+        }
+
+        button.enviar:hover {
+            background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+        }
+
+        button.limpiar {
+            background: #e3e7ee;
+            color: #223;
+        }
+
+        button.limpiar:hover {
+            background: #b0bec5;
+            color: #0d3d6a;
+        }
+
+        .notification-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .notification-toast {
+            background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
+            color: #222;
+            padding: 24px 36px;
+            border-radius: 12px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            border: 2px solid #ffe082;
+        }
+
+        .error {
+            border-color: #e53935 !important;
+            background: #ffeaea !important;
+        }
+
+        .help-text {
+            font-size: 0.92rem;
+            color: #607d8b;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .firma-fake {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            color: #222;
+            background: #f7fafc;
+            border: 1.5px solid #cfd8dc;
+            border-radius: 7px;
+            padding: 10px 12px;
+            margin-top: 4px;
+            margin-bottom: 8px;
+            width: 100%;
+            display: block;
+            text-align: left;
+            letter-spacing: 2px;
+            box-sizing: border-box;
+        }
+
+        .user-preview {
+            background: #222;
+            color: #fff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #bfc9d1;
+        }
+
+        .user-preview button {
+            margin-top: 10px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-box {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+            max-width: 370px;
+            width: 100%;
+            margin: 60px auto 0 auto;
+            padding: 36px 28px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1.5px solid #e3e7ee;
+        }
+
+        .perfil-menu {
+            position: fixed;
+            top: 24px;
+            right: 32px;
+            z-index: 1000;
+        }
+
+        .perfil-button {
+            background: #077dc2;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            user-select: none;
+            border: none;
+        }
+
+        .perfil-dropdown {
+            margin-top: 8px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            min-width: 140px;
+            padding: 8px 0;
+            display: none;
+        }
+
+        .perfil-dropdown.show {
+            display: block;
+        }
+
+        .perfil-dropdown button {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-weight: 600;
+            width: 100%;
+            padding: 10px 16px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        fieldset {
+            border: 1px solid #cfd8dc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            min-width: 320px;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        legend {
+            font-weight: 600;
+            color: #0d3d6a;
+            padding: 0 8px;
+        }
+
+        .test-users {
+            font-size: 13px;
+            color: #555;
+            margin: 8px 0 16px 0;
+            text-align: center;
+            background: #f3f3f3;
+            border-radius: 6px;
+            padding: 6px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container, .login-box {
+                max-width: 98vw;
+                padding: 18px 4vw 10vw 4vw;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 14px;
+            }
+            .logo-aduana {
+                max-width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        // Datos de usuarios predefinidos
+        const users = [
+            {
+                rut: "12345678-9",
+                nombre: "Orlando",
+                apellido: "Perez",
+                ciudad: "Santiago",
+                correo: "orlando@gmail.com",
+                origen: "Chile",
+                destino: "Argentina",
+                matricula: "AA1111",
+                sag: {
+                    nombreDeclarante: "",
+                    runDeclarante: "",
+                    edadDeclarante: "",
+                    nombreRepresentante: "",
+                    runRepresentante: "",
+                    alimentoVegetal: false,
+                    alimentoAnimal: false,
+                    semillas: false,
+                    plantasVivas: false,
+                    suelos: false,
+                    mascotas: false,
+                    procedencia: "",
+                    cantidad: "",
+                    firma: "",
+                    fecha: "",
+                    juramento: false,
+                    cantidadMascotas: ""
+                },
+                pdi: {
+                    nombreMenor: "",
+                    runMenor: "",
+                    nombreAcompanante: "",
+                    runAcompanante: "",
+                    tipoViaje: "",
+                    autorizacionNotarial: "",
+                    parentesco: "",
+                    paisDestino: "",
+                    fechaSalida: "",
+                    fechaRegreso: "",
+                    motivoViaje: ""
+                }
+            },
+            {
+                rut: "98765432-1",
+                nombre: "Juan",
+                apellido: "Malo",
+                ciudad: "Santiago",
+                correo: "juan.malo@gmail.com",
+                origen: "Chile",
+                destino: "Argentina",
+                matricula: "BB2222",
+                sag: {
+                    nombreDeclarante: "Juan Malo",
+                    runDeclarante: "98765432-1",
+                    edadDeclarante: "35",
+                    nombreRepresentante: "",
+                    runRepresentante: "",
+                    alimentoVegetal: true,
+                    alimentoAnimal: false,
+                    semillas: false,
+                    plantasVivas: false,
+                    suelos: false,
+                    mascotas: true,
+                    cantidadMascotas: "2",
+                    procedencia: "Chile",
+                    cantidad: "2 cajas",
+                    firma: "Juan Malo",
+                    fecha: "2025-07-07",
+                    juramento: true
+                },
+                pdi: {
+                    nombreMenor: "",
+                    runMenor: "",
+                    nombreAcompanante: "Juan Malo",
+                    runAcompanante: "98765432-1",
+                    tipoViaje: "Con uno de los padres",
+                    autorizacionNotarial: "Sí",
+                    parentesco: "Padre",
+                    paisDestino: "Argentina",
+                    fechaSalida: "2025-07-07",
+                    fechaRegreso: "2025-07-10",
+                    motivoViaje: "Vacaciones"
+                }
+            }
+        ];
+
+        // Datos de vehículos
+        const vehiculos = [
+            {
+                matricula: "AA1111",
+                multas: "No",
+                antecedentes: "No"
+            },
+            {
+                matricula: "BB2222",
+                multas: "Sí",
+                antecedentes: "Sí"
+            }
+        ];
+
+        // Usuarios de login
+        const testUsers = [
+            { username: "sag", password: "sag123" },
+            { username: "pdi", password: "pdi123" }
+        ];
+
+        // Campos de formularios
+        const sagFields = [
+            { label: "Nombre completo del declarante", name: "nombreDeclarante", type: "text" },
+            { label: "RUN o Pasaporte del declarante", name: "runDeclarante", type: "text" },
+            { label: "Edad del declarante", name: "edadDeclarante", type: "number" },
+            { label: "Nombre representante legal (si menor de 18)", name: "nombreRepresentante", type: "text" },
+            { label: "RUN representante legal (si menor de 18)", name: "runRepresentante", type: "text" },
+            { label: "Alimentos de origen vegetal", name: "alimentoVegetal", type: "checkbox" },
+            { label: "Alimentos de origen animal", name: "alimentoAnimal", type: "checkbox" },
+            { label: "Semillas", name: "semillas", type: "checkbox" },
+            { label: "Plantas vivas", name: "plantasVivas", type: "checkbox" },
+            { label: "Suelos u otros productos agrícolas", name: "suelos", type: "checkbox" },
+            { label: "Mascotas", name: "mascotas", type: "checkbox" },
+            { label: "Procedencia de los productos (país)", name: "procedencia", type: "text" },
+            { label: "Cantidad aproximada", name: "cantidad", type: "text" },
+            { label: "Firma del declarante", name: "firma", type: "text" },
+            { label: "Fecha", name: "fecha", type: "date" },
+            { label: "Declaro que la información es verídica y estoy sujeto a fiscalización", name: "juramento", type: "checkbox" },
+            { label: "Cantidad de mascotas", name: "cantidadMascotas", type: "number" }
+        ];
+
+        const pdiFields = [
+            { label: "Nombre completo del menor", name: "nombreMenor", type: "text" },
+            { label: "RUN o Pasaporte del menor", name: "runMenor", type: "text" },
+            { label: "Nombre completo del acompañante", name: "nombreAcompanante", type: "text" },
+            { label: "RUN del acompañante", name: "runAcompanante", type: "text" },
+            { label: "Tipo de viaje", name: "tipoViaje", type: "select", options: ["Con uno de los padres", "Sin ninguno de los padres", "Con tutor legal"] },
+            { label: "¿Adjunta autorización notarial?", name: "autorizacionNotarial", type: "select", options: ["Sí", "No"] },
+            { label: "Parentesco del acompañante", name: "parentesco", type: "text" },
+            { label: "País de destino", name: "paisDestino", type: "text" },
+            { label: "Fecha de salida", name: "fechaSalida", type: "date" },
+            { label: "Fecha de regreso", name: "fechaRegreso", type: "date" },
+            { label: "Motivo del viaje", name: "motivoViaje", type: "textarea" }
+        ];
+
+        // Estado de la aplicación
+        let loggedUser = null;
+        let usuario = {
+            rut: "",
+            nombre: "",
+            apellido: "",
+            ciudad: "",
+            correo: "",
+            origen: "",
+            destino: ""
+        };
+        let sag = getInitialState(sagFields);
+        let pdi = getInitialState(pdiFields);
+        let userErrors = {};
+        let wrongFields = [];
+        let userFound = null;
+        let showUserPreview = false;
+
+        // Funciones utilitarias
+        function getInitialState(fields) {
+            const state = {};
+            fields.forEach(field => {
+                state[field.name] = "";
+            });
+            return state;
+        }
+
+        function getNowDateTime() {
+            const now = new Date();
+            const pad = (n) => n.toString().padStart(2, "0");
+            return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+        }
+
+        function showNotification(msg) {
+            const overlay = document.createElement('div');
+            overlay.className = 'notification-overlay';
+            overlay.innerHTML = `<div class="notification-toast">${msg}</div>`;
+            document.body.appendChild(overlay);
+            setTimeout(() => {
+                document.body.removeChild(overlay);
+            }, 3000);
+        }
+
+        function checkUserForm() {
+            // Validar campos de usuario
+            const userFields = ["rut", "nombre", "apellido", "ciudad", "correo", "origen", "destino"];
+            let wrongFieldsArr = [];
+            userFields.forEach(f => {
+                if (!usuario[f]) wrongFieldsArr.push(f);
+            });
+
+            // Validar declaración SAG o PDI
+            if (loggedUser === "sag") {
+                const edad = Number(sag.edadDeclarante);
+                const sagObligatorios = [
+                    "nombreDeclarante", "runDeclarante", "edadDeclarante",
+                    "procedencia", "cantidad", "firma", "fecha"
+                ];
+                sagObligatorios.forEach(f => {
+                    if (!sag[f]) wrongFieldsArr.push(f);
+                });
+
+                if (edad < 18) {
+                    if (!sag.nombreRepresentante) wrongFieldsArr.push("nombreRepresentante");
+                    if (!sag.runRepresentante) wrongFieldsArr.push("runRepresentante");
+                }
+
+                const productos = [
+                    "alimentoVegetal", "alimentoAnimal", "semillas",
+                    "plantasVivas", "suelos", "mascotas"
+                ];
+                const algunoMarcado = productos.some(p => !!sag[p]);
+                if (!algunoMarcado) wrongFieldsArr.push(...productos);
+
+                if (!sag.juramento) wrongFieldsArr.push("juramento");
+
+                if (sag.mascotas && (!sag.cantidadMascotas || Number(sag.cantidadMascotas) <= 0)) {
+                    wrongFieldsArr.push("cantidadMascotas");
+                }
+            }
+
+            if (loggedUser === "pdi") {
+                pdiFields.forEach(f => {
+                    if (!pdi[f.name]) wrongFieldsArr.push(f.name);
+                });
+                if (
+                    (pdi.tipoViaje === "Con uno de los padres" || pdi.tipoViaje === "Sin ninguno de los padres" || pdi.tipoViaje === "Con tutor legal") &&
+                    pdi.autorizacionNotarial !== "Sí"
+                ) {
+                    wrongFieldsArr.push("autorizacionNotarial");
+                }
+            }
+
+            if (wrongFieldsArr.length > 0) {
+                showNotification("¡Debes completar todos los campos obligatorios antes de enviar!");
+                wrongFields = wrongFieldsArr;
+                render();
+                return false;
+            }
+
+            wrongFields = [];
+            showNotification("¡Formulario enviado correctamente!");
+            render();
+            return true;
+        }
+
+        function handleUserSelect(user) {
+            usuario = {
+                rut: user.rut || "",
+                nombre: user.nombre || "",
+                apellido: user.apellido || "",
+                ciudad: user.ciudad || "",
+                correo: user.correo || "",
+                origen: user.origen || "",
+                destino: user.destino || ""
+            };
+
+            const vehiculo = vehiculos.find(v => v.matricula === user.matricula);
+            const fechaSalida = getNowDateTime();
+            const fechaRegreso = (() => {
+                const now = new Date();
+                now.setDate(now.getDate() + 3);
+                const pad = (n) => n.toString().padStart(2, "0");
+                return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            })();
+
+            if (user.nombre && user.nombre.toLowerCase() === "juan") {
+                sag = {
+                    ...getInitialState(sagFields),
+                    ...user.sag,
+                    firma: user.nombre + " " + user.apellido,
+                    matricula: user.matricula || "",
+                    multa: vehiculo ? vehiculo.multas : "",
+                    monto: vehiculo && vehiculo.multas === "Sí" ? "150000" : "",
+                    fechaInspeccion: getNowDateTime()
+                };
+                pdi = {
+                    ...getInitialState(pdiFields),
+                    ...user.pdi,
+                    matricula: user.matricula || "",
+                    multas: vehiculo ? vehiculo.multas : "",
+                    antecedentes: vehiculo ? vehiculo.antecedentes : "",
+                    autorizaIngreso: vehiculo && (vehiculo.multas === "Sí" || vehiculo.antecedentes === "Sí") ? "No" : "Sí",
+                    fechaSalida,
+                    fechaRegreso,
+                    fechaIngreso: getNowDateTime()
+                };
+            } else {
+                sag = {
+                    ...getInitialState(sagFields),
+                    matricula: user.matricula || "",
+                    multa: vehiculo ? vehiculo.multas : "",
+                    monto: vehiculo && vehiculo.multas === "Sí" ? "150000" : ""
+                };
+                pdi = {
+                    ...getInitialState(pdiFields),
+                    matricula: user.matricula || "",
+                    multas: vehiculo ? vehiculo.multas : "",
+                    antecedentes: vehiculo ? vehiculo.antecedentes : "",
+                    autorizaIngreso: vehiculo && (vehiculo.multas === "Sí" || vehiculo.antecedentes === "Sí") ? "No" : "Sí",
+                    fechaSalida,
+                    fechaRegreso: ""
+                };
+            }
+
+            showUserPreview = false;
+            render();
+        }
+
+        function limpiarCampos() {
+            usuario = {
+                rut: "",
+                nombre: "",
+                apellido: "",
+                ciudad: "",
+                correo: "",
+                origen: "",
+                destino: ""
+            };
+            sag = getInitialState(sagFields);
+            pdi = getInitialState(pdiFields);
+            wrongFields = [];
+            userErrors = {};
+            userFound = null;
+            showUserPreview = false;
+            render();
+        }
+
+        function handleLogout() {
+            loggedUser = null;
+            limpiarCampos();
+            render();
+        }
+
+        // Renderizado de componentes
+        function renderLogin() {
+            return `
+                <div style="min-height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                    <div class="login-box">
+                        <div style="text-align: center;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Logo_Servicio_Nacional_de_Aduanas_%28Chile%29.jpg" alt="Logo" style="width: 120px; margin-bottom: 20px;" />
+                            <h2 style="color: #0d3d6a; font-size: 1.3rem; font-weight: 700; margin-bottom: 18px; text-align: center;">Inicio de Sesión</h2>
+                        </div>
+                        <form onsubmit="handleLogin(event)">
+                            <label style="width: 100%; margin-bottom: 10px;">
+                                Usuario:
+                                <input type="text" id="username" style="width: 100%; font-size: 1rem; padding: 10px 12px; border-radius: 7px; border: 1.5px solid #cfd8dc; background: #f7fafc; margin-top: 4px; margin-bottom: 10px;" autocomplete="off" />
+                            </label>
+                            <div class="test-users">
+                                <b>Usuarios de prueba:</b>
+                                <div>
+                                    <span style="color: #222;"><b>sag</b> / <b>sag123</b></span>
+                                    <span style="margin: 0 10px;">|</span>
+                                    <span style="color: #222;"><b>pdi</b> / <b>pdi123</b></span>
+                                </div>
+                            </div>
+                            <label style="width: 100%; margin-bottom: 10px;">
+                                Contraseña:
+                                <input type="text" id="password" style="width: 100%; font-size: 1rem; padding: 10px 12px; border-radius: 7px; border: 1.5px solid #cfd8dc; background: #f7fafc; margin-top: 4px; margin-bottom: 10px;" autocomplete="off" />
+                            </label>
+                            <div id="password-hint" style="font-size: 13px; color: #555; margin-bottom: 8px; text-align: center;"></div>
+                            <button type="submit" style="width: 100%; background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%); color: #fff; font-weight: 600; border-radius: 7px; border: none; padding: 10px 0; margin-top: 12px; font-size: 1.05rem; cursor: pointer;">
+                                Ingresar
+                            </button>
+                            <div id="login-error" style="color: red; margin-top: 10px; text-align: center;"></div>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRutAutocomplete() {
+            return `
+                <div>
+                    <input type="text" id="rut-input" value="${usuario.rut}" onchange="handleRutChange(this.value)" placeholder="Ejemplo: 12345678-9" style="width: 100%;" />
+                    ${userFound && !showUserPreview ? `
+                        <button type="button" onclick="toggleUserPreview()" style="margin: 10px 0;">
+                            Ver datos de ${userFound.nombre} ${userFound.apellido}
+                        </button>
+                    ` : ''}
+                    ${showUserPreview ? `
+                        <div class="user-preview">
+                            <strong>Nombre:</strong> ${userFound.nombre} ${userFound.apellido}<br />
+                            <strong>Ciudad:</strong> ${userFound.ciudad}<br />
+                            <strong>Correo:</strong> ${userFound.correo}<br />
+                            <strong>Origen:</strong> ${userFound.origen}<br />
+                            <strong>Destino:</strong> ${userFound.destino}<br />
+                            <strong>Matrícula:</strong> ${userFound.matricula}<br />
+                            <strong>Multa SAG:</strong> ${userFound.sag.multa}<br />
+                            ${userFound.sag.multa === "Sí" ? `<strong>Monto Multa SAG:</strong> $${userFound.sag.monto}<br />` : ''}
+                            <strong>Multas PDI:</strong> ${userFound.pdi.multas}<br />
+                            <strong>Antecedentes PDI:</strong> ${userFound.pdi.antecedentes}<br />
+                            <button onclick="fillUserData()">Rellenar con estos datos</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function renderGenericForm(title, fields, data, formType) {
+            let fieldsHtml = fields.map(field => {
+                if (field.hidden) return '';
+
+                if (field.type === "checkbox") {
+                    return `
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="${field.name}" ${data[field.name] ? 'checked' : ''} onchange="handle${formType}Change('${field.name}', this.checked, 'checkbox')" ${field.disabled ? 'disabled' : ''} class="${wrongFields.includes(field.name) ? 'error' : ''}" />
+                            ${field.label}
+                        </label>
+                    `;
+                }
+
+                if (field.type === "select") {
+                    return `
+                        <label style="width: 100%; margin-bottom: 8px;">
+                            ${field.label}
+                            <select name="${field.name}" onchange="handle${formType}Change('${field.name}', this.value)" ${field.disabled ? 'disabled' : ''} class="${wrongFields.includes(field.name) ? 'error' : ''}" style="width: 100%; margin-top: 4px;">
+                                <option value="" disabled ${!data[field.name] ? 'selected' : ''}>Selecciona una opción</option>
+                                ${field.options.map(opt => `<option value="${opt}" ${data[field.name] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                            </select>
+                        </label>
+                    `;
+                }
+
+                if (field.type === "textarea") {
+                    return `
+                        <label style="width: 100%; margin-bottom: 8px;">
+                            ${field.label}
+                            <textarea name="${field.name}" onchange="handle${formType}Change('${field.name}', this.value)" ${field.disabled ? 'disabled' : ''} class="${wrongFields.includes(field.name) ? 'error' : ''}" rows="4" style="min-height: 80px; resize: vertical; width: 100%; margin-top: 4px;">${data[field.name] || ''}</textarea>
+                        </label>
+                    `;
+                }
+
+                if (field.name === "firma") {
+                    if (data[field.name] && data["nombreDeclarante"] === "Juan Malo") {
+                        return `
+                            <label style="width: 100%; margin-bottom: 8px;">
+                                ${field.label}
+                                <div class="firma-fake">${data[field.name]}</div>
+                            </label>
+                        `;
+                    }
+                    return `
+                        <label style="width: 100%; margin-bottom: 8px;">
+                            ${field.label}
+                            <input type="text" name="${field.name}" value="${data[field.name] || ''}" onchange="handle${formType}Change('${field.name}', this.value)" ${field.disabled ? 'disabled' : ''} class="firma-fake ${wrongFields.includes(field.name) ? 'error' : ''}" style="width: 100%; margin-top: 4px;" autocomplete="off" />
+                        </label>
+                    `;
+                }
+
+                return `
+                    <label style="width: 100%; margin-bottom: 8px;">
+                        ${field.label}
+                        <input type="${field.type}" name="${field.name}" value="${data[field.name] || ''}" onchange="handle${formType}Change('${field.name}', this.value)" ${field.disabled ? 'disabled' : ''} class="${wrongFields.includes(field.name) ? 'error' : ''}" style="width: 100%; margin-top: 4px;" />
+                    </label>
+                `;
+            }).join('');
+
+            return `
+                <div style="display: flex; justify-content: center; align-items: center; width: auto; flex-direction: column;">
+                    <fieldset style="min-width: 320px; max-width: 420px; width: 100%;">
+                        ${title ? `<legend>${title}</legend>` : ''}
+                        ${fieldsHtml}
+                    </fieldset>
+                </div>
+            `;
+        }
+
+        function renderMainApp() {
+            const logo = "https://upload.wikimedia.org/wikipedia/commons/0/0e/Logo_Servicio_Nacional_de_Aduanas_%28Chile%29.jpg";
+            
+            return `
+                <div style="min-height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #f8f9fa;">
+                    <div class="container">
+                        <div class="perfil-menu">
+                            <button class="perfil-button" onclick="togglePerfilMenu()">
+                                Perfil ${loggedUser?.toUpperCase() || ""}
+                            </button>
+                            <div id="perfil-dropdown" class="perfil-dropdown">
+                                <button onclick="handleLogout()">Cerrar sesión</button>
+                            </div>
+                        </div>
+                        <div class="logo-container">
+                            <a href="https://www.aduana.cl/" target="_blank" rel="noopener noreferrer">
+                                <img src="${logo}" alt="Logo Aduana Chile" class="logo-aduana" />
+                            </a>
+                        </div>
+                        <h1>Sistema de Control Aduanero</h1>
+                        <form id="formulario" autocomplete="off" style="max-width: 400px; width: 100%; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); padding: 32px; display: flex; flex-direction: column; align-items: center;">
+                            <label for="rut">
+                                RUT:
+                                ${renderRutAutocomplete()}
+                            </label>
+                            <small class="help-text">Ejemplo: 12345678-9 o 98765432-1</small>
+
+                            <label for="nombre">
+                                Nombre:
+                                <input type="text" id="nombre" name="nombre" required placeholder="Ejemplo: Orlando o Juan" value="${usuario.nombre}" onchange="handleUsuarioChange('nombre', this.value)" class="${userErrors.nombre || wrongFields.includes('nombre') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "Orlando" o "Juan" según el RUT.</small>
+
+                            <label for="apellido">
+                                Apellido:
+                                <input type="text" id="apellido" name="apellido" required placeholder="Ejemplo: Perez o Malo" value="${usuario.apellido}" onchange="handleUsuarioChange('apellido', this.value)" class="${userErrors.apellido || wrongFields.includes('apellido') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "Perez" o "Malo" según el RUT.</small>
+
+                            <label for="ciudad">
+                                Ciudad de origen:
+                                <input type="text" id="ciudad" name="ciudad" required placeholder="Santiago" value="${usuario.ciudad}" onchange="handleUsuarioChange('ciudad', this.value)" class="${userErrors.ciudad || wrongFields.includes('ciudad') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "Santiago".</small>
+
+                            <label for="correo">
+                                Correo:
+                                <input type="email" id="correo" name="correo" required placeholder="Ejemplo: orlando@gmail.com o juan.malo@gmail.com" value="${usuario.correo}" onchange="handleUsuarioChange('correo', this.value)" class="${userErrors.correo || wrongFields.includes('correo') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "orlando@gmail.com" o "juan.malo@gmail.com" según el RUT.</small>
+
+                            <label for="origen">
+                                Origen:
+                                <input type="text" id="origen" name="origen" required placeholder="Chile" value="${usuario.origen}" onchange="handleUsuarioChange('origen', this.value)" class="${userErrors.origen || wrongFields.includes('origen') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "Chile".</small>
+
+                            <label for="destino">
+                                Destino:
+                                <input type="text" id="destino" name="destino" required placeholder="Argentina" value="${usuario.destino}" onchange="handleUsuarioChange('destino', this.value)" class="${userErrors.destino || wrongFields.includes('destino') ? 'error' : ''}" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "Argentina".</small>
+
+                            <label for="matricula">
+                                Matrícula del auto:
+                                <input type="text" id="matricula" name="matricula" required placeholder="Ejemplo: AA1111 o BB2222" value="${sag.matricula || ''}" onchange="handleMatriculaChange(this.value)" autocomplete="off" />
+                            </label>
+                            <small class="help-text">Debe ser "AA1111" (sin multas/antecedentes) o "BB2222" (con multas/antecedentes).</small>
+
+                            ${loggedUser === "sag" ? `
+                                <div>
+                                    <h2>Declaración SAG</h2>
+                                    ${renderGenericForm("", sagFields.map(f => {
+                                        if ((f.name === "nombreRepresentante" || f.name === "runRepresentante") && Number(sag.edadDeclarante) >= 18) {
+                                            return { ...f, hidden: true };
+                                        }
+                                        if (f.name === "cantidadMascotas" && !sag.mascotas) {
+                                            return { ...f, hidden: true };
+                                        }
+                                        return { ...f, hidden: false };
+                                    }), sag, "SAG")}
+                                </div>
+                            ` : ''}
+
+                            ${loggedUser === "pdi" ? `
+                                <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center;">
+                                    <h2 style="margin-bottom: 10px;">Control migratorio (PDI)</h2>
+                                    ${renderGenericForm("", pdiFields.map(f => {
+                                        if (f.name === "fechaIngreso") return { ...f, disabled: true };
+                                        if (f.name === "autorizaIngreso" && (pdi.antecedentes === "Sí" || pdi.multas === "Sí")) {
+                                            return { ...f, disabled: true };
+                                        }
+                                        return f;
+                                    }), pdi, "PDI")}
+                                </div>
+                            ` : ''}
+
+                            <div class="buttons">
+                                <button type="button" class="enviar" onclick="checkUserForm()" style="background-color: #27ae60; color: #fff; border-radius: 6px; padding: 8px 24px; font-weight: bold;">
+                                    Enviar Formulario
+                                </button>
+                                <button type="button" class="limpiar" onclick="limpiarCampos()" style="background-color: #bbb; color: #222; border-radius: 6px; padding: 8px 24px; margin-left: 10px;">
+                                    Limpiar
+                                </button>
+                            </div>
+                        </form>
+                        <div id="resultado" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Event handlers
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const found = testUsers.find(u => u.username === username && u.password === password);
+            if (found) {
+                loggedUser = found.username;
+                render();
+            } else {
+                document.getElementById('login-error').textContent = "Usuario o contraseña incorrectos";
+            }
+        }
+
+        function handleRutChange(value) {
+            usuario.rut = value;
+            const user = users.find(u => u.rut === value);
+            userFound = user || null;
+            showUserPreview = false;
+            render();
+        }
+
+        function toggleUserPreview() {
+            showUserPreview = !showUserPreview;
+            render();
+        }
+
+        function fillUserData() {
+            handleUserSelect(userFound);
+        }
+
+        function handleUsuarioChange(field, value) {
+            usuario[field] = value;
+            
+            if (!pdi.fechaIngreso) {
+                pdi.fechaIngreso = getNowDateTime();
+            }
+            render();
+        }
+
+        function handleSAGChange(field, value, type = 'text') {
+            if (type === 'checkbox') {
+                sag[field] = value;
+            } else {
+                sag[field] = value;
+            }
+            sag.fechaInspeccion = getNowDateTime();
+            
+            if (!pdi.fechaIngreso) {
+                pdi.fechaIngreso = getNowDateTime();
+            }
+            render();
+        }
+
+        function handlePDIChange(field, value) {
+            pdi[field] = value;
+            pdi.fechaIngreso = getNowDateTime();
+            render();
+        }
+
+        function handleMatriculaChange(value) {
+            sag.matricula = value;
+            pdi.matricula = value;
+            
+            const vehiculo = vehiculos.find(v => v.matricula === value);
+            if (vehiculo) {
+                sag.multa = vehiculo.multas;
+                sag.monto = vehiculo.multas === "Sí" ? "150000" : "";
+                pdi.multas = vehiculo.multas;
+                pdi.antecedentes = vehiculo.antecedentes;
+                pdi.autorizaIngreso = (vehiculo.multas === "Sí" || vehiculo.antecedentes === "Sí") ? "No" : "Sí";
+            }
+            render();
+        }
+
+        function togglePerfilMenu() {
+            const dropdown = document.getElementById('perfil-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Render principal
+        function render() {
+            const app = document.getElementById('app');
+            if (!loggedUser) {
+                app.innerHTML = renderLogin();
+                
+                // Event listeners para mostrar contraseña
+                const usernameInput = document.getElementById('username');
+                const passwordHint = document.getElementById('password-hint');
+                
+                if (usernameInput) {
+                    usernameInput.addEventListener('input', function() {
+                        const userFound = testUsers.find(u => u.username === this.value);
+                        if (userFound) {
+                            passwordHint.innerHTML = `Contraseña para <b>${userFound.username}</b>: <b>${userFound.password}</b>`;
+                        } else {
+                            passwordHint.innerHTML = '';
+                        }
+                    });
+                }
+            } else {
+                app.innerHTML = renderMainApp();
+            }
+        }
+
+        // Cerrar dropdown al hacer click fuera
+        document.addEventListener('click', function(event) {
+            const perfilMenu = document.querySelector('.perfil-menu');
+            const dropdown = document.getElementById('perfil-dropdown');
+            if (perfilMenu && dropdown && !perfilMenu.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Inicializar aplicación
+        render();
+    </script>
+</body>
+</html>

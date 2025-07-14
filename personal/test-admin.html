@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Panel Administrativo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-button { margin: 5px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        .test-button:hover { background: #0056b3; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Panel de Pruebas - Sistema Administrativo</h1>
+    
+    <div class="test-section">
+        <h2>📊 Estado del Sistema</h2>
+        <div id="systemStatus">Verificando...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔐 Pruebas de Login</h2>
+        <button class="test-button" onclick="testAdminLogin()">Test Login Administrador</button>
+        <button class="test-button" onclick="testSupervisorLogin()">Test Login Supervisor</button>
+        <button class="test-button" onclick="testInspectorLogin()">Test Login Inspector</button>
+        <button class="test-button" onclick="clearSession()">Limpiar Sesión</button>
+        <div id="loginResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🚀 Navegación</h2>
+        <button class="test-button" onclick="goToIndex()">Ir a Index</button>
+        <button class="test-button" onclick="goToAdminPortal()">Ir a Admin Portal</button>
+        <button class="test-button" onclick="goToCitizenPortal()">Ir a Portal Ciudadano</button>
+        <div id="navigationResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔧 Pruebas de Funcionalidad</h2>
+        <button class="test-button" onclick="testAdminSystem()">Test AdminSystem</button>
+        <button class="test-button" onclick="testLocalStorage()">Test LocalStorage</button>
+        <button class="test-button" onclick="testScripts()">Test Scripts Cargados</button>
+        <div id="functionalityResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📝 Log de Consola</h2>
+        <button class="test-button" onclick="clearLog()">Limpiar Log</button>
+        <button class="test-button" onclick="showConsoleLog()">Mostrar Console Log</button>
+        <div id="consoleLog" style="background: #f8f9fa; padding: 10px; font-family: monospace; max-height: 200px; overflow-y: auto;"></div>
+    </div>
+
+    <script>
+        // Capturar logs de consola
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        let logMessages = [];
+        
+        function captureLog(type, args) {
+            const message = Array.from(args).join(' ');
+            logMessages.push(`[${new Date().toLocaleTimeString()}] ${type.toUpperCase()}: ${message}`);
+            updateConsoleLog();
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            captureLog('log', args);
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            captureLog('error', args);
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            captureLog('warn', args);
+        };
+        
+        function updateConsoleLog() {
+            const logDiv = document.getElementById('consoleLog');
+            logDiv.innerHTML = logMessages.slice(-20).join('<br>');
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function clearLog() {
+            logMessages = [];
+            updateConsoleLog();
+        }
+        
+        function showConsoleLog() {
+            updateConsoleLog();
+        }
+        
+        // Funciones de prueba
+        function updateResults(containerId, message, type = 'info') {
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            container.appendChild(div);
+        }
+        
+        function testAdminLogin() {
+            console.log('🧪 Probando login de administrador...');
+            updateResults('loginResults', 'Probando login de administrador...', 'info');
+            
+            const sessionData = {
+                user: {
+                    id: 'ADMIN',
+                    name: 'Administrador Test',
+                    department: 'Administración',
+                    role: 'administrador',
+                    email: 'admin@test.com'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000)
+            };
+            
+            try {
+                localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+                updateResults('loginResults', '✅ Sesión de administrador creada exitosamente', 'success');
+                updateSystemStatus();
+            } catch (error) {
+                updateResults('loginResults', `❌ Error al crear sesión: ${error.message}`, 'error');
+            }
+        }
+        
+        function testSupervisorLogin() {
+            console.log('🧪 Probando login de supervisor...');
+            updateResults('loginResults', 'Probando login de supervisor...', 'info');
+            
+            const sessionData = {
+                user: {
+                    id: 'FUN001',
+                    name: 'Supervisor Test',
+                    department: 'Control Migratorio',
+                    role: 'supervisor',
+                    email: 'supervisor@test.com'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000)
+            };
+            
+            try {
+                localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+                updateResults('loginResults', '✅ Sesión de supervisor creada exitosamente', 'success');
+                updateSystemStatus();
+            } catch (error) {
+                updateResults('loginResults', `❌ Error al crear sesión: ${error.message}`, 'error');
+            }
+        }
+        
+        function testInspectorLogin() {
+            console.log('🧪 Probando login de inspector...');
+            updateResults('loginResults', 'Probando login de inspector...', 'info');
+            
+            const sessionData = {
+                user: {
+                    id: 'FUN002',
+                    name: 'Inspector Test',
+                    department: 'Inspección de Equipaje',
+                    role: 'inspector',
+                    email: 'inspector@test.com'
+                },
+                loginTime: new Date().toISOString(),
+                expiry: Date.now() + (8 * 60 * 60 * 1000)
+            };
+            
+            try {
+                localStorage.setItem('aduanasAdminSession', JSON.stringify(sessionData));
+                updateResults('loginResults', '✅ Sesión de inspector creada exitosamente', 'success');
+                updateSystemStatus();
+            } catch (error) {
+                updateResults('loginResults', `❌ Error al crear sesión: ${error.message}`, 'error');
+            }
+        }
+        
+        function clearSession() {
+            console.log('🧪 Limpiando sesión...');
+            try {
+                localStorage.removeItem('aduanasAdminSession');
+                updateResults('loginResults', '✅ Sesión limpiada exitosamente', 'success');
+                updateSystemStatus();
+            } catch (error) {
+                updateResults('loginResults', `❌ Error al limpiar sesión: ${error.message}`, 'error');
+            }
+        }
+        
+        function goToIndex() {
+            console.log('🧪 Navegando a index.html...');
+            updateResults('navigationResults', 'Navegando a index.html...', 'info');
+            window.location.href = 'index.html';
+        }
+        
+        function goToAdminPortal() {
+            console.log('🧪 Navegando a admin-portal.html...');
+            updateResults('navigationResults', 'Navegando a admin-portal.html...', 'info');
+            window.location.href = 'admin-portal.html';
+        }
+        
+        function goToCitizenPortal() {
+            console.log('🧪 Navegando a citizen-portal.html...');
+            updateResults('navigationResults', 'Navegando a citizen-portal.html...', 'info');
+            window.location.href = 'citizen-portal.html';
+        }
+        
+        function testAdminSystem() {
+            console.log('🧪 Probando AdminSystem...');
+            updateResults('functionalityResults', 'Probando AdminSystem...', 'info');
+            
+            if (typeof AdminSystem !== 'undefined') {
+                updateResults('functionalityResults', '✅ AdminSystem está definido', 'success');
+                
+                try {
+                    const testAdmin = new AdminSystem();
+                    updateResults('functionalityResults', '✅ AdminSystem se puede instanciar', 'success');
+                    
+                    if (testAdmin.employees && testAdmin.employees.length > 0) {
+                        updateResults('functionalityResults', `✅ AdminSystem tiene ${testAdmin.employees.length} empleados cargados`, 'success');
+                    } else {
+                        updateResults('functionalityResults', '⚠️ AdminSystem no tiene empleados cargados', 'error');
+                    }
+                } catch (error) {
+                    updateResults('functionalityResults', `❌ Error al instanciar AdminSystem: ${error.message}`, 'error');
+                }
+            } else {
+                updateResults('functionalityResults', '❌ AdminSystem no está definido', 'error');
+            }
+        }
+        
+        function testLocalStorage() {
+            console.log('🧪 Probando LocalStorage...');
+            updateResults('functionalityResults', 'Probando LocalStorage...', 'info');
+            
+            try {
+                localStorage.setItem('test', 'value');
+                const value = localStorage.getItem('test');
+                if (value === 'value') {
+                    updateResults('functionalityResults', '✅ LocalStorage funciona correctamente', 'success');
+                    localStorage.removeItem('test');
+                } else {
+                    updateResults('functionalityResults', '❌ LocalStorage no funciona correctamente', 'error');
+                }
+            } catch (error) {
+                updateResults('functionalityResults', `❌ Error en LocalStorage: ${error.message}`, 'error');
+            }
+        }
+        
+        function testScripts() {
+            console.log('🧪 Verificando scripts cargados...');
+            updateResults('functionalityResults', 'Verificando scripts cargados...', 'info');
+            
+            const scripts = [
+                'AdminSystem',
+                'BookingSystem',
+                'AduanasSystem',
+                'Calendar'
+            ];
+            
+            scripts.forEach(scriptName => {
+                if (typeof window[scriptName] !== 'undefined') {
+                    updateResults('functionalityResults', `✅ ${scriptName} está cargado`, 'success');
+                } else {
+                    updateResults('functionalityResults', `❌ ${scriptName} no está cargado`, 'error');
+                }
+            });
+        }
+        
+        function updateSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            const session = localStorage.getItem('aduanasAdminSession');
+            
+            let status = '<strong>Estado del Sistema:</strong><br>';
+            
+            if (session) {
+                try {
+                    const sessionData = JSON.parse(session);
+                    const expiry = new Date(sessionData.expiry);
+                    const isValid = sessionData.expiry > Date.now();
+                    
+                    status += `🔐 Sesión activa: ${sessionData.user.name}<br>`;
+                    status += `👤 Rol: ${sessionData.user.role}<br>`;
+                    status += `🏢 Departamento: ${sessionData.user.department}<br>`;
+                    status += `⏰ Expira: ${expiry.toLocaleString()}<br>`;
+                    status += `✅ Válida: ${isValid ? 'Sí' : 'No'}<br>`;
+                } catch (error) {
+                    status += `❌ Error en sesión: ${error.message}<br>`;
+                }
+            } else {
+                status += '❌ No hay sesión activa<br>';
+            }
+            
+            status += `🌐 URL actual: ${window.location.href}<br>`;
+            status += `📅 Timestamp: ${new Date().toLocaleString()}`;
+            
+            statusDiv.innerHTML = status;
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Test panel inicializado');
+            updateSystemStatus();
+            
+            // Actualizar cada 5 segundos
+            setInterval(updateSystemStatus, 5000);
+        });
+    </script>
+</body>
+</html>

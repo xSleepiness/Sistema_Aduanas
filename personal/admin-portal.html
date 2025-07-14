@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Funcionarios - Sistema de Aduanas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Superior con logo de Aduanas Chile -->
+    <div class="top-header">
+        <div class="container">
+            <div class="top-header-content">
+                <img src="images/aduanas-logo-temp.svg" alt="Aduanas Chile" class="aduanas-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Administración -->
+    <div class="admin-panel" id="adminPanel" style="display: flex;">
+        <div class="admin-header">
+            <div class="admin-user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="loggedUserName">Funcionario</span>
+                <span id="loggedUserDept">Departamento</span>
+            </div>
+            <div class="admin-actions">
+                <button class="btn-secondary" onclick="goToMainSite()">
+                    <i class="fas fa-home"></i> Sitio Principal
+                </button>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+        
+        <div class="admin-content">
+            <div class="admin-sidebar">
+                <div class="sidebar-header">
+                    <h3>Panel de Control</h3>
+                </div>
+                <ul class="admin-menu">
+                    <li><a href="#" onclick="showAdminSection('dashboard')" class="active">
+                        <i class="fas fa-tachometer-alt"></i> Panel Principal
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('appointments')">
+                        <i class="fas fa-calendar-check"></i> Citas del Día
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('tourism')">
+                        <i class="fas fa-plane"></i> Gestión Turística
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('minors')">
+                        <i class="fas fa-child"></i> Permisos de Menores
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('vehicles')">
+                        <i class="fas fa-car"></i> Gestión de Vehículos
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('documents')">
+                        <i class="fas fa-file-check"></i> Calificación de Documentos
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('reports')">
+                        <i class="fas fa-chart-bar"></i> Reportes
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('audit')">
+                        <i class="fas fa-shield-alt"></i> Auditoría y Accesos
+                    </a></li>
+                    <li><a href="#" onclick="showAdminSection('settings')">
+                        <i class="fas fa-cog"></i> Configuración
+                    </a></li>
+                </ul>
+            </div>
+            
+            <div class="admin-main">
+                <!-- Dashboard -->
+                <div class="admin-section" id="dashboard">
+                    <div class="section-header">
+                        <h2>Panel Principal</h2>
+                        <p>Resumen de actividades del sistema</p>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-calendar-day"></i>
+                            <div class="stat-info">
+                                <h3 id="todayAppointments">0</h3>
+                                <p>Citas Hoy</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-plane"></i>
+                            <div class="stat-info">
+                                <h3 id="touristRequests">0</h3>
+                                <p>Solicitudes Turísticas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-child"></i>
+                            <div class="stat-info">
+                                <h3 id="minorPermits">0</h3>
+                                <p>Permisos de Menores</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-clock"></i>
+                            <div class="stat-info">
+                                <h3 id="pendingRequests">0</h3>
+                                <p>Pendientes</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-sections">
+                        <div class="dashboard-section">
+                            <h3>Actividad Reciente</h3>
+                            <div class="activity-list" id="recentActivity">
+                                <!-- Se llena dinámicamente -->
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-section">
+                            <h3>Alertas del Sistema</h3>
+                            <div class="alerts-list" id="systemAlerts">
+                                <div class="alert-item info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Sistema funcionando correctamente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Citas del Día -->
+                <div class="admin-section" id="appointments" style="display: none;">
+                    <div class="section-header">
+                        <h2>Citas del Día</h2>
+                        <div class="section-actions">
+                            <button class="btn-primary" onclick="refreshAppointments()">
+                                <i class="fas fa-refresh"></i> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Panel de Herramientas de Prueba para Citas -->
+                    <div class="test-tools" style="background: #d1ecf1; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #17a2b8;">
+                        <h4 style="color: #0c5460; margin: 0 0 10px 0;">📅 Herramientas de Citas</h4>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="createTestAppointments()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #17a2b8; color: white;">
+                                <i class="fas fa-calendar-plus"></i> Crear Citas de Prueba
+                            </button>
+                            <button onclick="refreshAppointments()" class="btn-refresh" style="font-size: 12px; padding: 6px 12px;">
+                                <i class="fas fa-sync-alt"></i> Forzar Actualización
+                            </button>
+                            <button onclick="debugAppointmentSystem()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #6f42c1; color: white;">
+                                <i class="fas fa-bug"></i> Debug Citas
+                            </button>
+                            <button onclick="debugSyncronization()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #fd7e14; color: white;">
+                                <i class="fas fa-sync"></i> Debug Sync
+                            </button>
+                            <button onclick="testAppointmentFlow()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #28a745; color: white;">
+                                <i class="fas fa-flask"></i> Test Flujo
+                            </button>
+                            <button onclick="forceSystemReload()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #dc3545; color: white;">
+                                <i class="fas fa-power-off"></i> Reiniciar
+                            </button>
+                            <button onclick="viewAuditHistory()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #6f42c1; color: white;">
+                                <i class="fas fa-history"></i> Auditoría
+                            </button>
+                            <button onclick="exportAuditReport()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #fd7e14; color: white;">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                        <p style="font-size: 11px; color: #0c5460; margin: 8px 0 0 0;">
+                            <em>Herramientas para gestión y pruebas de citas</em>
+                        </p>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Documento</th>
+                                    <th>Servicio</th>
+                                    <th>Estado</th>
+                                    <th>Modificado por</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Gestión Turística -->
+                <div class="admin-section" id="tourism" style="display: none;">
+                    <div class="section-header">
+                        <h2>Gestión Turística</h2>
+                        <div class="section-actions">
+                            <button class="btn-primary" onclick="refreshTourismRequests()">
+                                <i class="fas fa-refresh"></i> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <button class="btn-primary" onclick="createNewTourismRequest()">
+                                <i class="fas fa-plus"></i> Nueva Solicitud
+                            </button>
+                            <button class="btn-secondary" onclick="refreshTourismData()">
+                                <i class="fas fa-sync-alt"></i> Actualizar
+                            </button>
+                            <button class="btn-secondary" onclick="exportTourismData()">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                        
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha Solicitud</th>
+                                    <th>Datos del Turista</th>
+                                    <th>Nacionalidad / Pasaporte</th>
+                                    <th>Fechas de Estadía</th>
+                                    <th>Tipo de Asistencia</th>
+                                    <th>Estado</th>
+                                    <th>ID</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tourismTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Permisos de Menores -->
+                <div class="admin-section" id="minors" style="display: none;">
+                    <div class="section-header">
+                        <h2>Permisos de Menores</h2>
+                        <div class="section-actions">
+                            <button class="btn-primary" onclick="refreshMinorPermits()">
+                                <i class="fas fa-refresh"></i> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Menor</th>
+                                    <th>Edad</th>
+                                    <th>Acompañante</th>
+                                    <th>Destino</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="minorsTableBody">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Reportes -->
+                <div class="admin-section" id="reports" style="display: none;">
+                    <div class="section-header">
+                        <h2>Reportes y Estadísticas</h2>
+                    </div>
+                    
+                    <div class="reports-content">
+                        <div class="report-filters">
+                            <div class="filter-group">
+                                <div class="form-group">
+                                    <label for="reportType">Tipo de Reporte</label>
+                                    <select id="reportType">
+                                        <option value="daily">Diario</option>
+                                        <option value="weekly">Semanal</option>
+                                        <option value="monthly">Mensual</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportDate">Fecha</label>
+                                    <input type="date" id="reportDate">
+                                </div>
+                                <button class="btn-primary" onclick="generateReport()">
+                                    <i class="fas fa-chart-line"></i> Generar Reporte
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="report-results" id="reportResults">
+                            <div class="report-placeholder">
+                                <i class="fas fa-chart-bar"></i>
+                                <p>Seleccione los parámetros y genere un reporte</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gestión de Vehículos -->
+                <div class="admin-section" id="vehicles" style="display: none;">
+                    <h2>Gestión de Vehículos</h2>
+                    <div class="vehicles-admin">
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <i class="fas fa-car"></i>
+                                <div class="stat-info">
+                                    <h3 id="totalVehicles">0</h3>
+                                    <p>Vehículos Registrados</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-clock"></i>
+                                <div class="stat-info">
+                                    <h3 id="pendingVehicles">0</h3>
+                                    <p>Pendientes de Aprobación</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-check-circle"></i>
+                                <div class="stat-info">
+                                    <h3 id="approvedVehicles">0</h3>
+                                    <p>Aprobados</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Panel de Herramientas de Prueba -->
+                        <div class="test-tools" style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107;">
+                            <h4 style="color: #856404; margin: 0 0 10px 0;">🧪 Herramientas de Prueba</h4>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button onclick="createTestVehicles()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px;">
+                                    <i class="fas fa-plus"></i> Crear Datos de Prueba
+                                </button>
+                                <button onclick="refreshVehiclesAdmin()" class="btn-refresh" style="font-size: 12px; padding: 6px 12px;">
+                                    <i class="fas fa-sync-alt"></i> Forzar Actualización
+                                </button>
+                                <button onclick="debugVehicleSystem()" class="btn-secondary" style="font-size: 12px; padding: 6px 12px; background: #17a2b8; color: white;">
+                                    <i class="fas fa-bug"></i> Debug Sistema
+                                </button>
+                            </div>
+                            <p style="font-size: 11px; color: #856404; margin: 8px 0 0 0;">
+                                <em>Estas herramientas son solo para desarrollo y pruebas</em>
+                            </p>
+                        </div>
+                        
+                        <div class="vehicles-management">
+                            <div class="table-header">
+                                <h3>Vehículos Registrados</h3>
+                                <div class="table-filters">
+                                    <input type="text" id="adminVehicleSearch" placeholder="Buscar vehículos...">
+                                    <select id="adminVehicleStatus">
+                                        <option value="">Todos los estados</option>
+                                        <option value="registered">Registrado</option>
+                                        <option value="pending">Pendiente</option>
+                                        <option value="approved">Aprobado</option>
+                                        <option value="rejected">Rechazado</option>
+                                    </select>
+                                    <button type="button" class="btn-primary" onclick="createNewVehicleAdmin()" title="Crear nuevo vehículo" style="background: #28a745; margin-right: 10px;">
+                                        <i class="fas fa-plus"></i> Nuevo Vehículo
+                                    </button>
+                                    <button type="button" class="btn-refresh" onclick="refreshVehiclesAdmin()" title="Actualizar lista de vehículos">
+                                        <i class="fas fa-sync-alt"></i> Actualizar
+                                    </button>
+                                    <button type="button" class="btn-secondary" onclick="exportVehicleData()" title="Exportar datos de vehículos" style="background: #6c757d; margin-left: 10px;">
+                                        <i class="fas fa-download"></i> Exportar
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patente</th>
+                                        <th>Marca/Modelo</th>
+                                        <th>Propietario</th>
+                                        <th>Tipo</th>
+                                        <th>Propósito</th>
+                                        <th>Estado</th>
+                                        <th>Fecha</th>
+                                        <th>Modificado por</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminVehiclesTableBody">
+                                    <!-- Se llena dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Calificación de Documentos -->
+                <div class="admin-section" id="documents" style="display: none;">
+                    <div class="section-header">
+                        <h2>Gestión y Calificación de Documentos</h2>
+                        <div class="section-actions">
+                            <button onclick="openNewDocumentModal()" class="btn-primary">
+                                <i class="fas fa-plus"></i> Nuevo Documento
+                            </button>
+                            <button onclick="bulkQualifyDocuments()" class="btn-secondary">
+                                <i class="fas fa-check-double"></i> Calificación Masiva
+                            </button>
+                            <button onclick="exportDocumentsReport()" class="btn-secondary">
+                                <i class="fas fa-download"></i> Exportar Reporte
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="documents-admin">
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <i class="fas fa-file-alt"></i>
+                                <div class="stat-info">
+                                    <h3 id="totalDocuments">0</h3>
+                                    <p>Documentos Recibidos</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-hourglass-half"></i>
+                                <div class="stat-info">
+                                    <h3 id="pendingDocuments">0</h3>
+                                    <p>Pendientes de Calificar</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-check-double"></i>
+                                <div class="stat-info">
+                                    <h3 id="qualifiedDocuments">0</h3>
+                                    <p>Calificados</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <div class="stat-info">
+                                    <h3 id="urgentDocuments">0</h3>
+                                    <p>Urgentes</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="documents-management">
+                            <div class="table-header">
+                                <h3>Documentos para Calificar</h3>
+                                <div class="table-filters">
+                                    <input type="text" id="adminDocumentSearch" placeholder="Buscar por ID, emisor o propósito...">
+                                    <select id="adminDocumentStatus">
+                                        <option value="">Todos los estados</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="en-revision">En Revisión</option>
+                                        <option value="calificado">Calificado</option>
+                                        <option value="aprobado">Aprobado</option>
+                                        <option value="rechazado">Rechazado</option>
+                                        <option value="solicita-info">Solicita Información</option>
+                                        <option value="suspendido">Suspendido</option>
+                                    </select>
+                                    <select id="adminDocumentUrgency">
+                                        <option value="">Todas las urgencias</option>
+                                        <option value="critica">Crítica</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="media">Media</option>
+                                        <option value="normal">Normal</option>
+                                    </select>
+                                    <select id="adminDocumentType">
+                                        <option value="">Todos los tipos</option>
+                                        <option value="importacion">Importación</option>
+                                        <option value="exportacion">Exportación</option>
+                                        <option value="transito">Tránsito</option>
+                                        <option value="certificacion">Certificación</option>
+                                        <option value="permiso">Permiso Especial</option>
+                                    </select>
+                                    <button onclick="refreshDocumentsList()" class="btn-icon" title="Actualizar">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selectAllDocuments" onchange="toggleSelectAllDocuments()">
+                                        </th>
+                                        <th>ID</th>
+                                        <th>Tipo</th>
+                                        <th>Emisor</th>
+                                        <th>Propósito</th>
+                                        <th>Urgencia</th>
+                                        <th>Estado</th>
+                                        <th>Calificación</th>
+                                        <th>Recibido</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminDocumentsTableBody">
+                                    <!-- Se llena dinámicamente -->
+                                </tbody>
+                            </table>
+                            
+                            <!-- Paginación -->
+                            <div class="table-pagination">
+                                <div class="pagination-info">
+                                    <span id="documentsCount">0 documentos</span>
+                                </div>
+                                <div class="pagination-controls">
+                                    <button onclick="previousDocumentsPage()" id="prevDocsBtn" class="btn-icon" disabled>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="documentsPageInfo">Página 1 de 1</span>
+                                    <button onclick="nextDocumentsPage()" id="nextDocsBtn" class="btn-icon" disabled>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auditoría y Accesos -->
+                <div class="admin-section" id="audit" style="display: none;">
+                    <div class="section-header">
+                        <h2>Auditoría y Control de Accesos</h2>
+                        <div class="section-actions">
+                            <button onclick="showAuditDashboard()" class="btn-primary">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard de Auditoría
+                            </button>
+                            <button onclick="exportFullAuditReport()" class="btn-secondary">
+                                <i class="fas fa-download"></i> Exportar Reporte Completo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Estadísticas de Acceso -->
+                    <div class="audit-stats">
+                        <div class="stat-card audit-stat">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <div class="stat-info">
+                                <h3 id="totalAccesses">-</h3>
+                                <p>Accesos Totales (7 días)</p>
+                            </div>
+                        </div>
+                        <div class="stat-card audit-stat">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info">
+                                <h3 id="uniqueUsers">-</h3>
+                                <p>Usuarios Únicos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card audit-stat">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="stat-info">
+                                <h3 id="adminAccesses">-</h3>
+                                <p>Accesos Admin</p>
+                            </div>
+                        </div>
+                        <div class="stat-card audit-stat">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="stat-info">
+                                <h3 id="failedLogins">-</h3>
+                                <p>Intentos Fallidos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtros de Auditoría -->
+                    <div class="audit-filters">
+                        <div class="filter-group">
+                            <label for="auditDateFrom">Desde:</label>
+                            <input type="date" id="auditDateFrom">
+                        </div>
+                        <div class="filter-group">
+                            <label for="auditDateTo">Hasta:</label>
+                            <input type="date" id="auditDateTo">
+                        </div>
+                        <div class="filter-group">
+                            <label for="auditUserFilter">Usuario:</label>
+                            <select id="auditUserFilter">
+                                <option value="">Todos los usuarios</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="auditActionFilter">Acción:</label>
+                            <select id="auditActionFilter">
+                                <option value="">Todas las acciones</option>
+                                <option value="LOGIN_SUCCESS">Login Exitoso</option>
+                                <option value="LOGIN_FAILED">Login Fallido</option>
+                                <option value="LOGOUT">Logout</option>
+                                <option value="CREATE">Crear</option>
+                                <option value="UPDATE">Actualizar</option>
+                                <option value="DELETE">Eliminar</option>
+                                <option value="APPROVE">Aprobar</option>
+                                <option value="REJECT">Rechazar</option>
+                            </select>
+                        </div>
+                        <button onclick="filterAuditLogs()" class="btn-primary">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                        <button onclick="clearAuditFilters()" class="btn-secondary">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                    
+                    <!-- Tabs de Auditoría -->
+                    <div class="audit-tabs">
+                        <button class="tab-btn active" onclick="switchAuditTab('accesses')">
+                            <i class="fas fa-sign-in-alt"></i> Registro de Accesos
+                        </button>
+                        <button class="tab-btn" onclick="switchAuditTab('actions')">
+                            <i class="fas fa-cogs"></i> Registro de Acciones
+                        </button>
+                        <button class="tab-btn" onclick="switchAuditTab('stats')">
+                            <i class="fas fa-chart-line"></i> Estadísticas
+                        </button>
+                    </div>
+                    
+                    <!-- Contenido de Tabs -->
+                    <div class="audit-content">
+                        <!-- Tab de Accesos -->
+                        <div id="auditTabAccesses" class="audit-tab-content active">
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha/Hora</th>
+                                            <th>Usuario</th>
+                                            <th>Portal</th>
+                                            <th>IP</th>
+                                            <th>Navegador</th>
+                                            <th>Sesión</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="accessLogsTable">
+                                        <!-- Se llena dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab de Acciones -->
+                        <div id="auditTabActions" class="audit-tab-content">
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha/Hora</th>
+                                            <th>Usuario</th>
+                                            <th>Acción</th>
+                                            <th>Objetivo</th>
+                                            <th>Detalles</th>
+                                            <th>Sesión</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="actionLogsTable">
+                                        <!-- Se llena dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Tab de Estadísticas -->
+                        <div id="auditTabStats" class="audit-tab-content">
+                            <div class="stats-grid">
+                                <div class="stats-section">
+                                    <h3>Accesos por Hora</h3>
+                                    <div id="hourlyChart" class="chart-container">
+                                        <!-- Gráfico simple de texto por ahora -->
+                                        <div id="hourlyStatsText"></div>
+                                    </div>
+                                </div>
+                                <div class="stats-section">
+                                    <h3>Accesos por Portal</h3>
+                                    <div id="portalChart" class="chart-container">
+                                        <div id="portalStatsText"></div>
+                                    </div>
+                                </div>
+                                <div class="stats-section">
+                                    <h3>Usuarios Más Activos</h3>
+                                    <div id="userChart" class="chart-container">
+                                        <div id="userStatsText"></div>
+                                    </div>
+                                </div>
+                                <div class="stats-section">
+                                    <h3>Actividad Reciente</h3>
+                                    <div id="recentActivityChart" class="chart-container">
+                                        <div id="recentActivityText"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Herramientas de Auditoría -->
+                    <div class="audit-tools">
+                        <div class="tool-group">
+                            <h3>Herramientas de Mantenimiento</h3>
+                            <button onclick="cleanOldAuditLogs()" class="btn-warning">
+                                <i class="fas fa-broom"></i> Limpiar Logs Antiguos (90+ días)
+                            </button>
+                            <button onclick="refreshAuditData()" class="btn-primary">
+                                <i class="fas fa-sync"></i> Actualizar Datos
+                            </button>
+                        </div>
+                        <div class="tool-group">
+                            <h3>Exportación</h3>
+                            <button onclick="exportAuditLogsCSV()" class="btn-secondary">
+                                <i class="fas fa-file-csv"></i> Exportar CSV
+                            </button>
+                            <button onclick="exportAuditLogsJSON()" class="btn-secondary">
+                                <i class="fas fa-file-code"></i> Exportar JSON
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Configuración -->
+                <div class="admin-section" id="settings" style="display: none;">
+                    <div class="section-header">
+                        <h2>Configuración del Sistema</h2>
+                    </div>
+                    
+                    <div class="settings-content">
+                        <div class="settings-grid">
+                            <div class="setting-group">
+                                <h3>Horarios de Atención</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="openTime">Hora de Apertura</label>
+                                        <input type="time" id="openTime" value="09:00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="closeTime">Hora de Cierre</label>
+                                        <input type="time" id="closeTime" value="16:30">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-group">
+                                <h3>Configuración de Citas</h3>
+                                <div class="form-group">
+                                    <label for="slotDuration">Duración de Cita (minutos)</label>
+                                    <select id="slotDuration">
+                                        <option value="15">15 minutos</option>
+                                        <option value="30" selected>30 minutos</option>
+                                        <option value="45">45 minutos</option>
+                                        <option value="60">60 minutos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-group">
+                                <h3>Notificaciones</h3>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    <label for="emailNotifications">Notificaciones por email</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="systemAlerts" checked>
+                                    <label for="systemAlerts">Alertas del sistema</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn-primary" onclick="saveSettings()">
+                                <i class="fas fa-save"></i> Guardar Configuración
+                            </button>
+                            <button class="btn-secondary" onclick="resetSettings()">
+                                <i class="fas fa-undo"></i> Restaurar Defaults
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-info-circle"></i>
+                <h3 id="detailsTitle">Detalles</h3>
+            </div>
+            <div class="modal-body" id="detailsContent">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDetailsModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Nuevo/Editar Documento -->
+    <div class="modal" id="documentModal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeDocumentModal()">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-file-plus"></i>
+                <h3 id="documentModalTitle">Nuevo Documento</h3>
+            </div>
+            <div class="modal-body">
+                <form id="documentForm" class="document-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="docType">Tipo de Documento *</label>
+                            <select id="docType" name="type" required>
+                                <option value="">Seleccione el tipo</option>
+                                <option value="importacion">Importación</option>
+                                <option value="exportacion">Exportación</option>
+                                <option value="transito">Tránsito</option>
+                                <option value="certificacion">Certificación</option>
+                                <option value="permiso">Permiso Especial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="docEmitter">Emisor/Empresa *</label>
+                            <input type="text" id="docEmitter" name="emitter" required placeholder="Nombre del emisor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="docPurpose">Propósito/Descripción *</label>
+                            <textarea id="docPurpose" name="purpose" required placeholder="Describa el propósito del documento"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="docUrgency">Nivel de Urgencia *</label>
+                            <select id="docUrgency" name="urgency" required>
+                                <option value="normal">Normal</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                                <option value="critica">Crítica</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="docStatus">Estado</label>
+                            <select id="docStatus" name="status">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en-revision">En Revisión</option>
+                                <option value="calificado">Calificado</option>
+                                <option value="aprobado">Aprobado</option>
+                                <option value="rechazado">Rechazado</option>
+                                <option value="solicita-info">Solicita Información</option>
+                                <option value="suspendido">Suspendido</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="docValue">Valor Declarado</label>
+                            <input type="number" id="docValue" name="value" placeholder="0.00" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="docCurrency">Moneda</label>
+                            <select id="docCurrency" name="currency">
+                                <option value="CLP">CLP - Peso Chileno</option>
+                                <option value="USD">USD - Dólar Americano</option>
+                                <option value="EUR">EUR - Euro</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="docObservations">Observaciones</label>
+                        <textarea id="docObservations" name="observations" placeholder="Observaciones adicionales"></textarea>
+                    </div>
+                    
+                    <input type="hidden" id="docId" name="id">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDocumentModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="saveDocument()">Guardar Documento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Calificar Documento -->
+    <div class="modal" id="qualifyModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeQualifyModal()">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Calificar Documento</h3>
+            </div>
+            <div class="modal-body">
+                <div id="qualifyDocumentInfo" class="document-info">
+                    <!-- Info del documento se llena dinámicamente -->
+                </div>
+                
+                <form id="qualifyForm" class="qualify-form">
+                    <div class="form-group">
+                        <label for="qualifyDecision">Decisión de Calificación *</label>
+                        <select id="qualifyDecision" name="decision" required onchange="handleDecisionChange()">
+                            <option value="">Seleccione una decisión</option>
+                            <option value="aprobado">Aprobar</option>
+                            <option value="rechazado">Rechazar</option>
+                            <option value="solicita-info">Solicitar Información Adicional</option>
+                            <option value="suspendido">Suspender Temporalmente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="qualifyScoreGroup" style="display: none;">
+                        <label for="qualifyScore">Puntuación (1-10)</label>
+                        <input type="number" id="qualifyScore" name="score" min="1" max="10" step="0.1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qualifyComments">Comentarios/Razones *</label>
+                        <textarea id="qualifyComments" name="comments" required placeholder="Explique las razones de su decisión"></textarea>
+                    </div>
+                    
+                    <div class="form-group" id="nextStepsGroup" style="display: none;">
+                        <label for="qualifyNextSteps">Próximos Pasos</label>
+                        <textarea id="qualifyNextSteps" name="nextSteps" placeholder="Indique qué debe hacer el solicitante"></textarea>
+                    </div>
+                    
+                    <input type="hidden" id="qualifyDocId" name="docId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeQualifyModal()">Cancelar</button>
+                <button type="button" class="btn-primary" onclick="submitQualification()">Confirmar Calificación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Ver Detalles de Documento -->
+    <div class="modal" id="viewDocumentModal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeViewDocumentModal()">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-file-alt"></i>
+                <h3>Detalles del Documento</h3>
+            </div>
+            <div class="modal-body">
+                <div id="documentDetails" class="document-details">
+                    <!-- Detalles se llenan dinámicamente -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeViewDocumentModal()">Cerrar</button>
+                <button type="button" class="btn-warning" onclick="editDocumentFromView()" id="editDocBtn">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+                <button type="button" class="btn-primary" onclick="qualifyDocumentFromView()" id="qualifyDocBtn">
+                    <i class="fas fa-check"></i> Calificar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal" id="deleteConfirmModal">
+        <div class="modal-content small-modal">
+            <span class="close" onclick="closeDeleteConfirmModal()">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Confirmar Eliminación</h3>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de que desea eliminar este documento?</p>
+                <p class="warning-text">Esta acción no se puede deshacer.</p>
+                <div id="deleteDocumentInfo" class="document-info">
+                    <!-- Info del documento a eliminar -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeDeleteConfirmModal()">Cancelar</button>
+                <button type="button" class="btn-danger" onclick="confirmDeleteDocument()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/vehicles.js"></script>
+    <script src="js/documents.js"></script>
+    <script src="js/tourism.js"></script>
+    <script src="js/minors.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Funciones específicas del portal funcionarios
+        function goToMainSite() {
+            window.location.href = 'index.html';
+        }
+        
+        function refreshAppointments() {
+            if (window.adminSystem) {
+                window.adminSystem.loadAppointments();
+                AduanasSystem.showNotification('Citas actualizadas', 'success');
+            }
+        }
+        
+        function refreshTourismRequests() {
+            if (window.adminSystem) {
+                window.adminSystem.loadTourismRequests();
+                AduanasSystem.showNotification('Solicitudes turísticas actualizadas', 'success');
+            }
+        }
+        
+        function refreshMinorPermits() {
+            if (window.adminSystem) {
+                window.adminSystem.loadMinorPermits();
+                AduanasSystem.showNotification('Permisos de menores actualizados', 'success');
+            }
+        }
+        
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+        
+        // Inicializar el sistema cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Iniciando admin-portal...');
+            
+            // Verificar si hay una sesión activa
+            const savedSession = localStorage.getItem('aduanasAdminSession');
+            if (!savedSession) {
+                console.log('❌ No hay sesión activa, redirigiendo...');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            try {
+                const sessionData = JSON.parse(savedSession);
+                if (sessionData.expiry <= Date.now()) {
+                    console.log('❌ Sesión expirada, redirigiendo...');
+                    localStorage.removeItem('aduanasAdminSession');
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                console.log('✅ Sesión válida encontrada:', sessionData.user.name);
+                
+                // Mostrar información del usuario
+                document.getElementById('loggedUserName').textContent = sessionData.user.name;
+                document.getElementById('loggedUserDept').textContent = sessionData.user.department;
+                
+                // Esperar a que el AdminSystem se inicialice completamente
+                setTimeout(() => {
+                    if (window.adminSystem) {
+                        console.log('🔧 Configurando AdminSystem...');
+                        window.adminSystem.currentUser = sessionData.user;
+                        
+                        // Inicializar todos los sistemas
+                        if (typeof window.initializeSystems === 'function') {
+                            window.initializeSystems();
+                        }
+                        
+                        window.adminSystem.loadDashboardData();
+                        window.adminSystem.setupAutoUpdateListeners();
+                        console.log('✅ AdminSystem configurado correctamente');
+                    } else {
+                        console.error('❌ AdminSystem no disponible');
+                    }
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error al cargar sesión:', error);
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // Inicializar AdminSystem cuando se cargan los scripts
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (typeof AdminSystem !== 'undefined') {
+                    console.log('🔧 Inicializando AdminSystem en admin-portal...');
+                    window.adminSystem = new AdminSystem();
+                    
+                    // Verificar sesión nuevamente después de inicializar
+                    const savedSession = localStorage.getItem('aduanasAdminSession');
+                    if (savedSession) {
+                        try {
+                            const sessionData = JSON.parse(savedSession);
+                            window.adminSystem.currentUser = sessionData.user;
+                            window.adminSystem.showAdminPanel();
+                            console.log('✅ AdminSystem configurado con usuario:', sessionData.user.name);
+                        } catch (error) {
+                            console.error('Error al configurar AdminSystem:', error);
+                        }
+                    }
+                } else {
+                    console.error('❌ AdminSystem no está disponible');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

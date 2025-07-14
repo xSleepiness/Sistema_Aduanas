@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test de Sistema entre Aduanas API</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+<nav class="bg-blue-800 text-white px-4 py-3 shadow">
+  <ul class="flex flex-wrap gap-4 justify-center">
+    <li><a href="index.html" class="hover:underline font-semibold">Inicio</a></li>
+    <li><a href="rendimiento.html" class="hover:underline">Test Rendimiento</a></li>
+    <li><a href="test-http.html" class="hover:underline">Test HTTPS</a></li>
+    <li><a href="test-sistema-aduanas.html" class="hover:underline">Test API Aduanas</a></li>
+    <li><a href="test-gestion-usuarios.html" class="hover:underline">Test Gestión Usuarios</a></li>
+    <li><a href="generar-reporte.html" class="hover:underline">Reportes de Errores</a></li>
+    <li><a href="test-documentos.html" class="hover:underline">Test Documentos</a></li>
+  </ul>
+</nav>
+  <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Test de Sistema entre Aduanas API</h1>
+    <p class="mb-2 text-gray-700">
+      Este test verifica la conectividad y el tiempo de respuesta entre los sistemas internos y la API de Aduanas.
+    </p>
+    <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400 text-blue-800 rounded">
+      <strong>Última actualización:</strong>
+      <span id="fecha-actual"></span>
+    </div>
+    <div id="result" class="mt-6"></div>
+    <div class="mt-8">
+      <h2 class="text-lg font-semibold mb-2 text-blue-900">¿Qué hacer ante problemas de conexión?</h2>
+      <ul class="list-disc ml-6 text-gray-700 text-sm">
+        <li>Verifica la red y los logs de la API para identificar la causa.</li>
+        <li>Contacta al área de soporte si la conexión falla repetidamente.</li>
+        <li>Consulta la <a href="https://www.aduana.cl/" target="_blank" class="text-blue-700 underline">documentación oficial</a> para procedimientos de contingencia.</li>
+      </ul>
+    </div>
+    <div class="mt-8 text-xs text-gray-400 text-center">
+      &copy; 2025 Aduana Chile. Resultados simulados para monitoreo interno.
+    </div>
+  </div>
+  <script>
+    // Mostrar fecha y hora actual
+    document.addEventListener('DOMContentLoaded', function() {
+      const fecha = new Date();
+      document.getElementById('fecha-actual').textContent =
+        fecha.toLocaleString('es-CL', { dateStyle: 'full', timeStyle: 'short' });
+    });
+
+    window.onload = function() {
+      const result = document.getElementById('result');
+      result.innerHTML = '<span class="text-gray-500">Probando conexión...</span>';
+      setTimeout(() => {
+        result.innerHTML = `
+          <table class="min-w-full mb-4 bg-white border border-gray-200 rounded text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2 border-b text-left">Prueba</th>
+                <th class="px-3 py-2 border-b text-left">Resultado</th>
+                <th class="px-3 py-2 border-b text-left">Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-3 py-2 border-b">Conexión</td>
+                <td class="px-3 py-2 border-b"><span class="bg-green-100 text-green-800 px-2 py-1 rounded">Exitosa</span></td>
+                <td class="px-3 py-2 border-b">Sin errores</td>
+              </tr>
+              <tr>
+                <td class="px-3 py-2 border-b">Tiempo de respuesta</td>
+                <td class="px-3 py-2 border-b"><span class="bg-green-100 text-green-800 px-2 py-1 rounded">120 ms</span></td>
+                <td class="px-3 py-2 border-b">Dentro de parámetros normales</td>
+              </tr>
+              <tr>
+                <td class="px-3 py-2 border-b">Datos recibidos</td>
+                <td class="px-3 py-2 border-b"><span class="bg-green-100 text-green-800 px-2 py-1 rounded">OK</span></td>
+                <td class="px-3 py-2 border-b">Estructura válida</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-2 text-green-700 font-semibold">Test finalizado correctamente.</div>
+        `;
+      }, 1100);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!-- Header institucional de Aduanas Chile -->
+<svg width="1200" height="120" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definiciones de gradientes y patrones -->
+  <defs>
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a365d"/>
+      <stop offset="30%" style="stop-color:#1e3c72"/>
+      <stop offset="70%" style="stop-color:#2a5298"/>
+      <stop offset="100%" style="stop-color:#1a365d"/>
+    </linearGradient>
+    
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="50%" style="stop-color:#ffed4e"/>
+      <stop offset="100%" style="stop-color:#ffd700"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    
+    <pattern id="subtle-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <rect width="40" height="40" fill="none"/>
+      <circle cx="20" cy="20" r="1" fill="#ffd700" opacity="0.1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Fondo principal con gradiente -->
+  <rect width="1200" height="120" fill="url(#mainGradient)"/>
+  
+  <!-- Patrón decorativo sutil -->
+  <rect width="1200" height="120" fill="url(#subtle-pattern)"/>
+  
+  <!-- Líneas decorativas superiores -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#goldGradient)"/>
+  <rect x="0" y="4" width="1200" height="1" fill="#fff" opacity="0.3"/>
+  
+  <!-- Elementos decorativos laterales -->
+  <polygon points="0,0 150,0 120,120 0,120" fill="url(#goldGradient)" opacity="0.15"/>
+  <polygon points="1200,0 1050,0 1080,120 1200,120" fill="url(#goldGradient)" opacity="0.15"/>
+  
+  <!-- Área del escudo nacional (lado izquierdo) -->
+  <g transform="translate(60, 60)">
+    <!-- Escudo base -->
+    <path d="M-25,-30 L25,-30 L30,-20 L30,20 L20,35 L0,40 L-20,35 L-30,20 L-30,-20 Z" 
+          fill="#ffd700" opacity="0.8" filter="url(#shadow)"/>
+    
+    <!-- Estrella central -->
+    <polygon points="0,-15 3,-5 15,-5 6,2 9,12 0,6 -9,12 -6,2 -15,-5 -3,-5" 
+             fill="#1e3c72"/>
+    
+    <!-- Detalles del escudo -->
+    <rect x="-20" y="-10" width="40" height="2" fill="#1e3c72" opacity="0.6"/>
+    <rect x="-20" y="5" width="40" height="2" fill="#1e3c72" opacity="0.6"/>
+  </g>
+  
+  <!-- Texto principal centrado -->
+  <text x="600" y="40" fill="white" font-size="32" font-family="Georgia, serif" 
+        font-weight="bold" text-anchor="middle" filter="url(#shadow)">
+    SERVICIO NACIONAL DE ADUANAS
+  </text>
+  
+  <text x="600" y="65" fill="#ffd700" font-size="14" font-family="Arial, sans-serif" 
+        text-anchor="middle" font-weight="600">
+    GOBIERNO DE CHILE
+  </text>
+  
+  <text x="600" y="85" fill="#ffffff" font-size="12" font-family="Arial, sans-serif" 
+        text-anchor="middle" opacity="0.9">
+    Sistema Digital de Trámites Aduaneros
+  </text>
+  
+  <!-- Elementos decorativos de esquinas -->
+  <g opacity="0.6">
+    <rect x="30" y="25" width="3" height="70" fill="url(#goldGradient)"/>
+    <rect x="1167" y="25" width="3" height="70" fill="url(#goldGradient)"/>
+    
+    <!-- Decoraciones de esquina -->
+    <path d="M30,25 L50,25 L50,28 L33,28 Z" fill="url(#goldGradient)"/>
+    <path d="M30,95 L50,95 L50,92 L33,92 Z" fill="url(#goldGradient)"/>
+    <path d="M1167,25 L1150,25 L1150,28 L1167,28 Z" fill="url(#goldGradient)"/>
+    <path d="M1167,95 L1150,95 L1150,92 L1167,92 Z" fill="url(#goldGradient)"/>
+  </g>
+  
+  <!-- Líneas decorativas inferiores -->
+  <rect x="0" y="115" width="1200" height="1" fill="#fff" opacity="0.3"/>
+  <rect x="0" y="116" width="1200" height="4" fill="url(#goldGradient)"/>
+  
+  <!-- Marca de agua sutil Chile -->
+  <text x="1100" y="100" fill="#ffffff" font-size="10" font-family="Arial, sans-serif" 
+        opacity="0.4" text-anchor="end">
+    CHILE
+  </text>
+</svg>

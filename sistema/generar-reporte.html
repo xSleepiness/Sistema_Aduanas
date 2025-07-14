@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generar Reportes de Errores</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+<nav class="bg-blue-800 text-white px-4 py-3 shadow">
+  <ul class="flex flex-wrap gap-4 justify-center">
+    <li><a href="index.html" class="hover:underline font-semibold">Inicio</a></li>
+    <li><a href="rendimiento.html" class="hover:underline">Test Rendimiento</a></li>
+    <li><a href="test-http.html" class="hover:underline">Test HTTPS</a></li>
+    <li><a href="test-sistema-aduanas.html" class="hover:underline">Test API Aduanas</a></li>
+    <li><a href="test-gestion-usuarios.html" class="hover:underline">Test Gestión Usuarios</a></li>
+    <li><a href="generar-reporte.html" class="hover:underline">Reportes de Errores</a></li>
+    <li><a href="test-documentos.html" class="hover:underline">Test Documentos</a></li>
+  </ul>
+</nav>
+  <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Generar Reportes de Errores</h1>
+    <p class="mb-2 text-gray-700">
+      Esta sección muestra un reporte automático de los errores detectados en los sistemas de Aduana. El reporte se actualiza cada vez que visitas esta página.
+    </p>
+    <div class="mb-4 p-4 bg-blue-50 border-l-4 border-blue-400 text-blue-800 rounded">
+      <strong>Última actualización:</strong>
+      <span id="fecha-actual"></span>
+    </div>
+    <div id="result" class="mt-6"></div>
+    <div class="mt-8">
+      <h2 class="text-lg font-semibold mb-2 text-blue-900">¿Qué hacer ante un error?</h2>
+      <ul class="list-disc ml-6 text-gray-700 text-sm">
+        <li>Verifica la causa y el mensaje del error en el detalle del reporte.</li>
+        <li>Contacta al equipo de soporte si el error persiste o afecta procesos críticos.</li>
+        <li>Consulta la <a href="https://www.aduana.cl/" target="_blank" class="text-blue-700 underline">documentación oficial</a> para más información.</li>
+      </ul>
+    </div>
+    <div class="mt-8 text-xs text-gray-400 text-center">
+      &copy; 2025 Aduana Chile. Este reporte es generado automáticamente para fines de monitoreo.
+    </div>
+  </div>
+  <script>
+    // Mostrar fecha y hora actual
+    document.addEventListener('DOMContentLoaded', function() {
+      const fecha = new Date();
+      document.getElementById('fecha-actual').textContent =
+        fecha.toLocaleString('es-CL', { dateStyle: 'full', timeStyle: 'short' });
+    });
+
+    window.onload = function() {
+      const result = document.getElementById('result');
+      result.innerHTML = '<span class="text-gray-500">Generando reporte...</span>';
+      setTimeout(() => {
+        result.innerHTML = `
+          <div class="mb-2">Errores encontrados: <span class="text-red-700 font-semibold">2</span></div>
+          <table class="min-w-full mb-4 bg-white border border-gray-200 rounded text-sm">
+            <thead>
+              <tr class="bg-gray-100">
+                <th class="px-3 py-2 border-b text-left">Fecha</th>
+                <th class="px-3 py-2 border-b text-left">Sistema</th>
+                <th class="px-3 py-2 border-b text-left">Detalle</th>
+                <th class="px-3 py-2 border-b text-left">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="px-3 py-2 border-b">2025-06-18 08:15</td>
+                <td class="px-3 py-2 border-b">Gestión de Usuarios</td>
+                <td class="px-3 py-2 border-b">Fallo en autenticación de usuario</td>
+                <td class="px-3 py-2 border-b"><span class="bg-red-100 text-red-800 px-2 py-1 rounded">Crítico</span></td>
+              </tr>
+              <tr>
+                <td class="px-3 py-2 border-b">2025-06-18 07:50</td>
+                <td class="px-3 py-2 border-b">Consulta de Documentos</td>
+                <td class="px-3 py-2 border-b">Timeout en consulta de documentos</td>
+                <td class="px-3 py-2 border-b"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Alerta</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-2 text-green-700 font-semibold">Reporte generado correctamente.</div>
+        `;
+      }, 1200);
+    }
+  </script>
+</body>
+</html>

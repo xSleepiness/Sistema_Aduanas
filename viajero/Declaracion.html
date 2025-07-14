@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Declaración de Paso - Aduanas de Chile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #003366;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    form {
+      display: grid;
+      gap: 20px;
+    }
+
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    legend {
+      font-weight: bold;
+      color: #003366;
+      padding: 0 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005199;
+    }
+
+    /* Estilos para la barra de navegación */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #003366;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-left img {
+      height: 40px;
+      margin-right: 20px;
+    }
+
+    .navbar-links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 15px;
+    }
+
+    .navbar-search {
+      flex-grow: 1;
+      margin: 0 20px;
+    }
+
+    .navbar-search input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .navbar-icons button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      fieldset {
+        padding: 15px;
+      }
+
+      .navbar-links {
+        display: none;
+      }
+
+      .navbar-search {
+        order: 1;
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      .navbar-icons {
+        order: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar del dashboard -->
+  <nav>
+    <div class="navbar-left">
+      <img src="logo_aduanas.png" alt="Logo Aduanas de Chile">
+      <div class="navbar-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Reserva.html">Reserva</a>
+        <a href="Declaracion.html">Declaración</a>
+        <a href="Pagos.html">Pagos</a>
+        <a href="Tramites.html">Trámites</a>
+        <a href="Documentos.html">Documentos</a>
+      </div>
+    </div>
+    <div class="navbar-icons">
+      <button title="Notificaciones">🔔</button>
+      <button title="Perfil" onclick="window.location.href='perfil.html'">👤</button>
+    </div>
+  </nav>
+
+  <main>
+    <form onsubmit="alert('Formulario enviado correctamente.'); return false;">
+
+      <!-- Sección 1: Identificación -->
+      <fieldset>
+        <legend>Identificación</legend>
+        <label for="importador">Consignatario / Importador</label>
+        <input type="text" id="importador" name="importador" required>
+
+        <label for="rut">RUT</label>
+        <input type="text" id="rut" name="rut" required>
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" required>
+
+        <label for="comuna">Comuna</label>
+        <input type="text" id="comuna" name="comuna" required>
+      </fieldset>
+
+      <!-- Sección 2: Origen y transporte -->
+      <fieldset>
+        <legend>Origen y Transporte</legend>
+        <label for="paisOrigen">País de Origen</label>
+        <input type="text" id="paisOrigen" name="paisOrigen" required>
+
+        <label for="puertoEmbarque">Puerto de Embarque</label>
+        <input type="text" id="puertoEmbarque" name="puertoEmbarque" required>
+
+        <label for="viaTransporte">Vía de Transporte</label>
+        <select id="viaTransporte" name="viaTransporte" required>
+          <option value="">-- Seleccione --</option>
+          <option value="maritima">Marítima</option>
+          <option value="aerea">Aérea</option>
+          <option value="terrestre">Terrestre</option>
+        </select>
+      </fieldset>
+
+      <!-- Sección 3: Mercancías -->
+      <fieldset>
+        <legend>Descripción de Mercancías</legend>
+        <label for="mercancia">Descripción</label>
+        <textarea id="mercancia" name="mercancia" required></textarea>
+
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" name="cantidad" required>
+
+        <label for="valor">Valor CIF</label>
+        <input type="number" id="valor" name="valor" required>
+      </fieldset>
+
+      <!-- Sección 4: Financieros -->
+      <fieldset>
+        <legend>Datos Financieros</legend>
+        <label for="formaPago">Forma de Pago</label>
+        <select id="formaPago" name="formaPago" required>
+          <option value="">-- Seleccione --</option>
+          <option value="contado">Contado</option>
+          <option value="credito">Crédito</option>
+        </select>
+
+        <label for="moneda">Moneda</label>
+        <input type="text" id="moneda" name="moneda" value="USD" required>
+      </fieldset>
+
+      <!-- Sección 5: Adjuntos -->
+      <fieldset>
+        <legend>Documentos Adjuntos</legend>
+        <label for="adjunto">Subir documento (PDF, JPG)</label>
+        <input type="file" id="adjunto" name="adjunto" accept=".pdf,.jpg,.jpeg,.png">
+      </fieldset>
+
+      <!-- Botón -->
+      <button type="submit">Enviar Declaración</button>
+    </form>
+  </main>
+</body>
+</html>

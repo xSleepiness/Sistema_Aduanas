@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estados de Servicios de Aduana en Chile</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+<nav class="bg-blue-800 text-white px-4 py-3 shadow">
+  <ul class="flex flex-wrap gap-4 justify-center">
+    <li><a href="index.html" class="hover:underline font-semibold">Inicio</a></li>
+    <li><a href="rendimiento.html" class="hover:underline">Test Rendimiento</a></li>
+    <li><a href="test-http.html" class="hover:underline">Test HTTPS</a></li>
+    <li><a href="test-sistema-aduanas.html" class="hover:underline">Test API Aduanas</a></li>
+    <li><a href="test-gestion-usuarios.html" class="hover:underline">Test Gestión Usuarios</a></li>
+    <li><a href="generar-reporte.html" class="hover:underline">Reportes de Errores</a></li>
+    <li><a href="test-documentos.html" class="hover:underline">Test Documentos</a></li>
+  </ul>
+</nav>
+  <header class="bg-blue-900 text-white p-6 shadow">
+    <h1 class="text-3xl font-bold">Estados de Servicios de Aduana en Chile</h1>
+    <p class="mt-2 text-blue-200">Monitoreo en tiempo real de los principales servicios</p>
+  </header>
+
+  <main class="max-w-4xl mx-auto mt-8 p-4 bg-white rounded shadow">
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Resumen Gráfico</h2>
+      <canvas id="estadoServiciosChart" height="100"></canvas>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="text-xl font-semibold mb-4">Detalle de Servicios</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 border-b">Servicio</th>
+              <th class="px-4 py-2 border-b">Estado</th>
+              <th class="px-4 py-2 border-b">Última Actualización</th>
+              <th class="px-4 py-2 border-b">Observaciones</th>
+            </tr>
+          </thead>
+          <tbody id="serviciosTableBody">
+            <!-- Filas generadas por JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="mt-8">
+      <h2 class="text-xl font-semibold mb-4 text-blue-900">¿Qué hacer ante incidencias?</h2>
+      <ul class="list-disc ml-6 text-gray-700 text-sm">
+        <li>Verifica el estado y observaciones del servicio afectado.</li>
+        <li>Contacta al área de soporte si el problema persiste o afecta procesos críticos.</li>
+        <li>Consulta la <a href="https://www.aduana.cl/" target="_blank" class="text-blue-700 underline">documentación oficial</a> para más información y procedimientos.</li>
+      </ul>
+    </section>
+    <section class="mt-8">
+      <h2 class="text-xl font-semibold mb-4 text-blue-900">Otros Test y Herramientas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="rendimiento.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Test de Rendimiento de Servidores</span>
+          <p class="text-sm text-blue-800">Evalúa el estado y recursos de los servidores de Aduana.</p>
+        </a>
+        <a href="test-http.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Test de HTTPS</span>
+          <p class="text-sm text-blue-800">Verifica la validez y seguridad del certificado SSL.</p>
+        </a>
+        <a href="test-sistema-aduanas.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Test API Aduanas</span>
+          <p class="text-sm text-blue-800">Comprueba la conectividad y respuesta de la API.</p>
+        </a>
+        <a href="test-gestion-usuarios.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Test Gestión Usuarios</span>
+          <p class="text-sm text-blue-800">Verifica la recepción y almacenamiento de usuarios.</p>
+        </a>
+        <a href="generar-reporte.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Reportes de Errores</span>
+          <p class="text-sm text-blue-800">Consulta los errores detectados en los sistemas.</p>
+        </a>
+        <a href="test-documentos.html" class="block p-4 bg-blue-50 border-l-4 border-blue-400 rounded hover:bg-blue-100 transition">
+          <span class="font-semibold text-blue-900">Test Documentos</span>
+          <p class="text-sm text-blue-800">Verifica si los documentos están al día.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-center text-gray-500 mt-8 mb-4">
+    &copy; 2025 Aduana Chile. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // Datos simulados de servicios
+    const servicios = [
+      {
+        nombre: "Sistema de Declaración de Importación",
+        estado: "Operativo",
+        ultimaActualizacion: "2025-06-18 09:15",
+        observaciones: "Sin incidencias"
+      },
+      {
+        nombre: "Sistema de Exportación",
+        estado: "Intermitente",
+        ultimaActualizacion: "2025-06-18 08:50",
+        observaciones: "Mantenimiento programado"
+      },
+      {
+        nombre: "Consulta de Trámites",
+        estado: "Fuera de Servicio",
+        ultimaActualizacion: "2025-06-18 07:30",
+        observaciones: "Falla técnica, en reparación"
+      },
+      {
+        nombre: "Pago de Derechos",
+        estado: "Operativo",
+        ultimaActualizacion: "2025-06-18 09:10",
+        observaciones: "Sin incidencias"
+      },
+      {
+        nombre: "Certificados Digitales",
+        estado: "Operativo",
+        ultimaActualizacion: "2025-06-18 09:00",
+        observaciones: "Sin incidencias"
+      }
+    ];
+
+    // Contar estados para el gráfico
+    const estadoCounts = servicios.reduce((acc, s) => {
+      acc[s.estado] = (acc[s.estado] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Colores para los estados
+    const estadoColors = {
+      "Operativo": "#22c55e",
+      "Intermitente": "#facc15",
+      "Fuera de Servicio": "#ef4444"
+    };
+
+    // Renderizar gráfico
+    const ctx = document.getElementById('estadoServiciosChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(estadoCounts),
+        datasets: [{
+          data: Object.values(estadoCounts),
+          backgroundColor: Object.keys(estadoCounts).map(e => estadoColors[e] || "#a1a1aa"),
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // Renderizar tabla
+    const tbody = document.getElementById('serviciosTableBody');
+    servicios.forEach(s => {
+      const estadoColor = {
+        "Operativo": "bg-green-100 text-green-800",
+        "Intermitente": "bg-yellow-100 text-yellow-800",
+        "Fuera de Servicio": "bg-red-100 text-red-800"
+      }[s.estado] || "bg-gray-100 text-gray-800";
+
+      tbody.innerHTML += `
+        <tr>
+          <td class="px-4 py-2 border-b">${s.nombre}</td>
+          <td class="px-4 py-2 border-b">
+            <span class="px-2 py-1 rounded text-xs font-semibold ${estadoColor}">
+              ${s.estado}
+            </span>
+          </td>
+          <td class="px-4 py-2 border-b">${s.ultimaActualizacion}</td>
+          <td class="px-4 py-2 border-b">${s.observaciones}</td>
+        </tr>
+      `;
+    });
+  </script>
+</body>
+</html>

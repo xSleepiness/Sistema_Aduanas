@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Ciudadano - Sistema de Aduanas</title>
+    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Superior con logo de Aduanas Chile -->
+    <div class="top-header">
+        <div class="container">
+            <div class="top-header-content">
+                <img src="images/aduanas-logo-temp.svg" alt="Aduanas Chile" class="aduanas-logo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header de navegación -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Portal Ciudadano</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#reservas">Reservas</a></li>
+                    <li><a href="#turismo">Turismo</a></li>
+                    <li><a href="#menores">Menores</a></li>
+                    <li><a href="#vehiculos">Vehículos</a></li>
+                    <li><a href="#documentos">Documentos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="index.html" class="btn-back">← Volver al Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero citizen-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Portal de Servicios Ciudadanos</h2>
+                <p>Acceda a todos los servicios aduaneros desde un solo lugar</p>
+                
+                <div class="service-shortcuts">
+                    <a href="#reservas" class="shortcut-card">
+                        <i class="fas fa-calendar-plus"></i>
+                        <h3>Reservar Cita</h3>
+                        <p>Agende su cita para trámites aduaneros</p>
+                    </a>
+                    
+                    <a href="#turismo" class="shortcut-card">
+                        <i class="fas fa-plane"></i>
+                        <h3>Asistencia Turística</h3>
+                        <p>Servicios especiales para turistas</p>
+                    </a>
+                    
+                    <a href="#menores" class="shortcut-card">
+                        <i class="fas fa-child"></i>
+                        <h3>Permisos de Menores</h3>
+                        <p>Autorización para menores de edad</p>
+                    </a>
+                    
+                    <a href="#vehiculos" class="shortcut-card">
+                        <i class="fas fa-car"></i>
+                        <h3>Registro de Vehículos</h3>
+                        <p>Gestión de patentes y documentos vehiculares</p>
+                    </a>
+                    
+                    <a href="#documentos" class="shortcut-card">
+                        <i class="fas fa-file-upload"></i>
+                        <h3>Calificación de Documentos</h3>
+                        <p>Subir documentos para verificación oficial</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistema de Reservas -->
+    <section id="reservas" class="reservations">
+        <div class="container">
+            <h2>Sistema de Reserva de Horarios</h2>
+            <div class="reservation-system">
+                <!-- Calendario -->
+                <div class="calendar-section">
+                    <h3>Seleccione una Fecha</h3>
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="btn-nav" id="prevMonth">&lt;</button>
+                            <h4 id="currentMonth"></h4>
+                            <button class="btn-nav" id="nextMonth">&gt;</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Días de la semana -->
+                            <div class="day-header">Dom</div>
+                            <div class="day-header">Lun</div>
+                            <div class="day-header">Mar</div>
+                            <div class="day-header">Mié</div>
+                            <div class="day-header">Jue</div>
+                            <div class="day-header">Vie</div>
+                            <div class="day-header">Sáb</div>
+                            <!-- Los días se generarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horarios Disponibles -->
+                <div class="time-slots-section">
+                    <h3>Horarios Disponibles</h3>
+                    <div class="selected-date" id="selectedDate">
+                        Seleccione una fecha del calendario
+                    </div>
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Los horarios se cargarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Formulario de Reserva -->
+                <div class="booking-form-section">
+                    <h3>Datos de la Reserva</h3>
+                    <form class="booking-form" id="bookingForm">
+                        <div class="form-group">
+                            <label for="fullName">Nombre Completo *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="idNumber">Número de Identificación *</label>
+                            <input type="text" id="idNumber" name="idNumber" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Teléfono *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="serviceType">Tipo de Servicio *</label>
+                            <select id="serviceType" name="serviceType" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="importacion">Importación</option>
+                                <option value="exportacion">Exportación</option>
+                                <option value="certificacion">Certificación</option>
+                                <option value="consulta">Consulta General</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="comments">Comentarios Adicionales</label>
+                            <textarea id="comments" name="comments" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="booking-summary" id="bookingSummary" style="display: none;">
+                            <h4>Resumen de la Reserva</h4>
+                            <div class="summary-details">
+                                <p><strong>Fecha:</strong> <span id="summaryDate"></span></p>
+                                <p><strong>Hora:</strong> <span id="summaryTime"></span></p>
+                                <p><strong>Servicio:</strong> <span id="summaryService"></span></p>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary btn-book">Confirmar Reserva</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gestión de Turismo -->
+    <section id="turismo" class="tourism">
+        <div class="container">
+            <h2>Gestión de Turismo</h2>
+            <div class="tourism-content">
+                <div class="tourism-info">
+                    <h3>Servicios para Turistas</h3>
+                    <div class="tourism-services">
+                        <div class="tourism-card">
+                            <i class="fas fa-passport"></i>
+                            <h4>Control Migratorio</h4>
+                            <p>Verificación de documentos de entrada y salida del país</p>
+                            <ul>
+                                <li>Revisión de pasaportes</li>
+                                <li>Verificación de visas</li>
+                                <li>Registro de entrada/salida</li>
+                            </ul>
+                        </div>
+                        <div class="tourism-card">
+                            <i class="fas fa-suitcase"></i>
+                            <h4>Revisión de Equipaje</h4>
+                            <p>Inspección de equipaje y declaración de bienes</p>
+                            <ul>
+                                <li>Revisión de equipaje de mano</li>
+                                <li>Inspección de maletas</li>
+                                <li>Declaración de bienes</li>
+                            </ul>
+                        </div>
+                        <div class="tourism-card">
+                            <i class="fas fa-gift"></i>
+                            <h4>Declaración de Regalos</h4>
+                            <p>Proceso para declarar regalos y souvenirs</p>
+                            <ul>
+                                <li>Límites permitidos</li>
+                                <li>Formularios de declaración</li>
+                                <li>Cálculo de impuestos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tourism-form">
+                    <h3>Solicitar Asistencia Turística</h3>
+                    <form id="tourismForm" class="tourism-request-form">
+                        <div class="form-group">
+                            <label for="touristName">Nombre Completo *</label>
+                            <input type="text" id="touristName" name="touristName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nationality">Nacionalidad *</label>
+                            <select id="nationality" name="nationality" required>
+                                <option value="">Seleccione su nacionalidad</option>
+                                <option value="argentina">Argentina</option>
+                                <option value="brasil">Brasil</option>
+                                <option value="colombia">Colombia</option>
+                                <option value="chile">Chile</option>
+                                <option value="peru">Perú</option>
+                                <option value="mexico">México</option>
+                                <option value="usa">Estados Unidos</option>
+                                <option value="espana">España</option>
+                                <option value="francia">Francia</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="passportNumber">Número de Pasaporte *</label>
+                            <input type="text" id="passportNumber" name="passportNumber" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="arrivalDate">Fecha de Llegada *</label>
+                            <input type="date" id="arrivalDate" name="arrivalDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="departureDate">Fecha de Salida *</label>
+                            <input type="date" id="departureDate" name="departureDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tourismType">Tipo de Asistencia *</label>
+                            <select id="tourismType" name="tourismType" required>
+                                <option value="">Seleccione el tipo</option>
+                                <option value="entrada">Asistencia de Entrada</option>
+                                <option value="salida">Asistencia de Salida</option>
+                                <option value="declaracion">Declaración de Bienes</option>
+                                <option value="consulta">Consulta General</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tourismComments">Detalles de la Solicitud</label>
+                            <textarea id="tourismComments" name="tourismComments" rows="3" placeholder="Describa su solicitud..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Enviar Solicitud</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Permisos de Menores -->
+    <section id="menores" class="minors">
+        <div class="container">
+            <h2>Permisos para Menores de Edad</h2>
+            <div class="minors-content">
+                <div class="minors-info">
+                    <h3>Requisitos para Menores</h3>
+                    <div class="requirements-list">
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h4>Documentación Requerida</h4>
+                                <ul>
+                                    <li>Pasaporte o documento de identidad del menor</li>
+                                    <li>Acta de nacimiento original</li>
+                                    <li>Autorización notariada de ambos padres</li>
+                                    <li>Copia de documentos de los padres</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Acompañantes Autorizados</h4>
+                                <ul>
+                                    <li>Padre o madre con autorización del otro</li>
+                                    <li>Tutor legal designado</li>
+                                    <li>Familiar autorizado por ambos padres</li>
+                                    <li>Representante de institución educativa</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Tiempos de Procesamiento</h4>
+                                <ul>
+                                    <li>Verificación inmediata: 15-30 minutos</li>
+                                    <li>Casos especiales: 1-2 horas</li>
+                                    <li>Consulta con autoridades: 2-4 horas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="minors-form">
+                    <h3>Solicitud de Permiso para Menor</h3>
+                    <form id="minorsForm" class="minors-request-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="minorName">Nombre del Menor *</label>
+                                <input type="text" id="minorName" name="minorName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="minorAge">Edad *</label>
+                                <input type="number" id="minorAge" name="minorAge" min="0" max="17" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minorDocument">Número de Documento del Menor *</label>
+                            <input type="text" id="minorDocument" name="minorDocument" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fatherName">Nombre del Padre *</label>
+                                <input type="text" id="fatherName" name="fatherName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="motherName">Nombre de la Madre *</label>
+                                <input type="text" id="motherName" name="motherName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fatherDocument">Documento del Padre *</label>
+                                <input type="text" id="fatherDocument" name="fatherDocument" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="motherDocument">Documento de la Madre *</label>
+                                <input type="text" id="motherDocument" name="motherDocument" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="accompaniedBy">Acompañado por *</label>
+                            <select id="accompaniedBy" name="accompaniedBy" required>
+                                <option value="">Seleccione quién acompaña</option>
+                                <option value="padre">Padre</option>
+                                <option value="madre">Madre</option>
+                                <option value="ambos">Ambos padres</option>
+                                <option value="tutor">Tutor legal</option>
+                                <option value="familiar">Familiar autorizado</option>
+                                <option value="institucion">Representante institucional</option>
+                                <option value="solo">Viaja solo (mayor de 12 años)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="travelPurpose">Propósito del Viaje *</label>
+                            <select id="travelPurpose" name="travelPurpose" required>
+                                <option value="">Seleccione el propósito</option>
+                                <option value="turismo">Turismo/Vacaciones</option>
+                                <option value="educativo">Viaje educativo</option>
+                                <option value="medico">Tratamiento médico</option>
+                                <option value="familiar">Visita familiar</option>
+                                <option value="deportivo">Evento deportivo</option>
+                                <option value="cultural">Evento cultural</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="travelDate">Fecha de Viaje *</label>
+                                <input type="date" id="travelDate" name="travelDate" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="returnDate">Fecha de Regreso *</label>
+                                <input type="date" id="returnDate" name="returnDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="destination">Destino *</label>
+                            <input type="text" id="destination" name="destination" placeholder="País/Ciudad de destino" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactPhone">Teléfono de Contacto *</label>
+                            <input type="tel" id="contactPhone" name="contactPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergencyContact">Contacto de Emergencia *</label>
+                            <input type="text" id="emergencyContact" name="emergencyContact" placeholder="Nombre y teléfono" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minorComments">Información Adicional</label>
+                            <textarea id="minorComments" name="minorComments" rows="3" placeholder="Información adicional relevante..."></textarea>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="documentsComplete" name="documentsComplete" required>
+                            <label for="documentsComplete">Confirmo que todos los documentos requeridos están completos y son auténticos *</label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="parentsConsent" name="parentsConsent" required>
+                                Confirmo que ambos padres han dado su consentimiento para este viaje *
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Solicitar Permiso</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gestión de Vehículos -->
+    <section id="vehiculos" class="vehicles">
+        <div class="container">
+            <h2>Registro y Gestión de Vehículos</h2>
+            <div class="vehicles-system">
+                <!-- Formulario de Registro de Vehículo -->
+                <div class="vehicle-form-section">
+                    <h3>Registrar Vehículo</h3>
+                    <form id="vehicleForm" class="vehicle-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="plateNumber">Número de Patente *</label>
+                                <input type="text" id="plateNumber" name="plateNumber" required 
+                                       placeholder="ABC-1234" pattern="[A-Z]{3}-[0-9]{4}">
+                                <small>Formato: ABC-1234</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleType">Tipo de Vehículo *</label>
+                                <select id="vehicleType" name="vehicleType" required>
+                                    <option value="">Seleccione el tipo</option>
+                                    <option value="automovil">Automóvil</option>
+                                    <option value="motocicleta">Motocicleta</option>
+                                    <option value="camion">Camión</option>
+                                    <option value="camioneta">Camioneta</option>
+                                    <option value="autobus">Autobús</option>
+                                    <option value="trailer">Tráiler</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleBrand">Marca *</label>
+                                <input type="text" id="vehicleBrand" name="vehicleBrand" required 
+                                       placeholder="Toyota, Ford, etc.">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleModel">Modelo *</label>
+                                <input type="text" id="vehicleModel" name="vehicleModel" required 
+                                       placeholder="Corolla, F-150, etc.">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleYear">Año *</label>
+                                <input type="number" id="vehicleYear" name="vehicleYear" required 
+                                       min="1980" max="2025" placeholder="2020">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vehicleColor">Color *</label>
+                                <input type="text" id="vehicleColor" name="vehicleColor" required 
+                                       placeholder="Blanco, Negro, Azul, etc.">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="engineNumber">Número de Motor</label>
+                                <input type="text" id="engineNumber" name="engineNumber" 
+                                       placeholder="Número del motor">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="chassisNumber">Número de Chasis</label>
+                                <input type="text" id="chassisNumber" name="chassisNumber" 
+                                       placeholder="VIN o número de chasis">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ownerName">Nombre del Propietario *</label>
+                            <input type="text" id="ownerName" name="ownerName" required 
+                                   placeholder="Nombre completo del propietario">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ownerDocument">Documento del Propietario *</label>
+                            <input type="text" id="ownerDocument" name="ownerDocument" required 
+                                   placeholder="Cédula, DNI, Pasaporte">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehiclePurpose">Propósito de Registro *</label>
+                            <select id="vehiclePurpose" name="vehiclePurpose" required>
+                                <option value="">Seleccione el propósito</option>
+                                <option value="importacion">Importación</option>
+                                <option value="exportacion">Exportación</option>
+                                <option value="transito">Tránsito Internacional</option>
+                                <option value="temporal">Admisión Temporal</option>
+                                <option value="comercial">Uso Comercial</option>
+                                <option value="personal">Uso Personal</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="additionalNotes">Observaciones Adicionales</label>
+                            <textarea id="additionalNotes" name="additionalNotes" rows="3" 
+                                      placeholder="Información adicional relevante..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Registrar Vehículo</button>
+                            <button type="button" class="btn-secondary" onclick="clearVehicleForm()">Limpiar</button>
+                            <button type="button" id="cancelEditBtn" class="btn-cancel" onclick="cancelEdit()" style="display: none;">Cancelar Edición</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Lista de Vehículos Registrados -->
+                <div class="vehicles-list-section">
+                    <h3>Vehículos Registrados</h3>
+                    <div class="vehicles-filter">
+                        <input type="text" id="vehicleSearch" placeholder="Buscar por patente, marca o modelo...">
+                        <select id="typeFilter">
+                            <option value="">Todos los tipos</option>
+                            <option value="automovil">Automóvil</option>
+                            <option value="motocicleta">Motocicleta</option>
+                            <option value="camion">Camión</option>
+                            <option value="camioneta">Camioneta</option>
+                            <option value="autobus">Autobús</option>
+                            <option value="trailer">Tráiler</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <button type="button" class="btn-refresh" onclick="forceVehicleRefresh()" title="Actualizar lista">
+                            <i class="fas fa-sync-alt"></i> Actualizar
+                        </button>
+                    </div>
+                    
+                    <div class="vehicles-grid" id="vehiclesGrid">
+                        <!-- Las tarjetas de vehículos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calificación de Documentos -->
+    <section id="documentos" class="documents">
+        <div class="container">
+            <h2>Calificación de Documentos</h2>
+            <div class="documents-system">
+                <!-- Formulario de Subida de Documentos -->
+                <div class="document-upload-section">
+                    <h3>Subir Documentos para Calificación</h3>
+                    <form id="documentForm" class="document-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="documentType">Tipo de Documento *</label>
+                                <select id="documentType" name="documentType" required>
+                                    <option value="">Seleccione el tipo</option>
+                                    <option value="factura">Factura Comercial</option>
+                                    <option value="conocimiento">Conocimiento de Embarque</option>
+                                    <option value="certificado">Certificado de Origen</option>
+                                    <option value="lista">Lista de Empaque</option>
+                                    <option value="seguro">Póliza de Seguro</option>
+                                    <option value="sanitario">Certificado Sanitario</option>
+                                    <option value="fitosanitario">Certificado Fitosanitario</option>
+                                    <option value="calidad">Certificado de Calidad</option>
+                                    <option value="licencia">Licencia de Importación</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="documentNumber">Número de Documento</label>
+                                <input type="text" id="documentNumber" name="documentNumber" 
+                                       placeholder="Número o folio del documento">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="documentIssuer">Entidad Emisora *</label>
+                                <input type="text" id="documentIssuer" name="documentIssuer" required 
+                                       placeholder="Nombre de la entidad que emitió el documento">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="documentDate">Fecha del Documento *</label>
+                                <input type="date" id="documentDate" name="documentDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="documentDescription">Descripción del Documento *</label>
+                            <textarea id="documentDescription" name="documentDescription" required rows="3" 
+                                      placeholder="Describa brevemente el contenido y propósito del documento..."></textarea>
+                        </div>
+                        
+                        <!-- Área de subida de archivos -->
+                        <div class="form-group">
+                            <label for="documentFiles">Archivos del Documento *</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="upload-zone" onclick="document.getElementById('documentFiles').click()">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Arrastra archivos aquí o haz clic para seleccionar</p>
+                                    <p class="upload-info">Formatos: PDF, JPG, PNG, DOC, DOCX (Max: 10MB por archivo)</p>
+                                </div>
+                                <input type="file" id="documentFiles" name="documentFiles" multiple 
+                                       accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" style="display: none;">
+                                <div class="files-preview" id="filesPreview"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="calificationPurpose">Propósito de la Calificación *</label>
+                            <select id="calificationPurpose" name="calificationPurpose" required>
+                                <option value="">Seleccione el propósito</option>
+                                <option value="importacion">Proceso de Importación</option>
+                                <option value="exportacion">Proceso de Exportación</option>
+                                <option value="validacion">Validación de Autenticidad</option>
+                                <option value="traduccion">Requerimiento de Traducción</option>
+                                <option value="apostille">Proceso de Apostilla</option>
+                                <option value="conformidad">Verificación de Conformidad</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="urgencyLevel">Nivel de Urgencia</label>
+                            <select id="urgencyLevel" name="urgencyLevel">
+                                <option value="normal">Normal (5-7 días hábiles)</option>
+                                <option value="media">Media (3-4 días hábiles)</option>
+                                <option value="alta">Alta (1-2 días hábiles)</option>
+                                <option value="critica">Crítica (Mismo día - Costo adicional)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Email de Contacto *</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required 
+                                   placeholder="correo@ejemplo.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactPhone">Teléfono de Contacto</label>
+                            <input type="tel" id="contactPhone" name="contactPhone" 
+                                   placeholder="+1234567890">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Enviar para Calificación</button>
+                            <button type="button" class="btn-secondary" onclick="clearDocumentForm()">Limpiar</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Estado de Documentos -->
+                <div class="documents-status-section">
+                    <h3>Estado de Documentos Enviados</h3>
+                    <div class="documents-filter">
+                        <input type="text" id="documentSearch" placeholder="Buscar por número, tipo o descripción...">
+                        <select id="statusFilter">
+                            <option value="">Todos los estados</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="en-revision">En Revisión</option>
+                            <option value="calificado">Calificado</option>
+                            <option value="rechazado">Rechazado</option>
+                            <option value="solicita-info">Solicita Información</option>
+                        </select>
+                    </div>
+                    
+                    <div class="documents-list" id="documentsList">
+                        <!-- Las tarjetas de documentos se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <h2>Información de Contacto</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Dirección</h3>
+                        <p>Av. Principal #123, Ciudad, País</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h3>Teléfono</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>contacto@aduanas.gov</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h3>Horario de Atención</h3>
+                        <p>Lunes - Viernes: 8:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Sistema de Aduanas Nacional - Portal Ciudadano. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Confirmación</h3>
+            </div>
+            <div class="modal-body">
+                <p>Su solicitud ha sido enviada exitosamente.</p>
+                <div class="confirmation-details" id="confirmationDetails">
+                    <!-- Detalles se llenarán dinámicamente -->
+                </div>
+                <p class="confirmation-note">
+                    Se ha enviado un email de confirmación a su dirección de correo.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/calendar.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/tourism.js"></script>
+    <script src="js/minors.js"></script>
+    <script src="js/vehicles.js"></script>
+    <script src="js/documents.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

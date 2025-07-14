@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trámites - Aduanas de Chile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #003366;
+      margin-top: 40px;
+    }
+
+    /* Nueva sección de trámites estilo tarjeta */
+    .tramites-box {
+      background-color: #e0e0e0;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .tramite-fila {
+      background-color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      box-shadow: inset 0 -1px 0 #ccc;
+    }
+
+    .tramite-nombre {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .estado {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .estado-disponible {
+      background-color: #4caf50;
+    }
+
+    .estado-revision {
+      background-color: #7b7b7b;
+    }
+
+    /* Formulario de nuevo trámite */
+    form {
+      margin-top: 20px;
+      display: grid;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      background-color: #003366;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005199;
+    }
+
+    .dynamic-fields {
+      margin-top: 10px;
+    }
+
+    /* Estilos para la barra de navegación */
+    nav {
+      background-color: #003366;
+      color: white;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-left img {
+      height: 40px;
+      margin-right: 20px;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .navbar-search {
+      flex-grow: 1;
+      margin: 0 20px;
+    }
+
+    .navbar-search input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+    }
+
+    .navbar-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      main {
+        margin: 10px;
+        padding: 20px;
+      }
+
+      .navbar-links {
+        display: none;
+      }
+
+      .navbar-search {
+        margin: 0;
+      }
+
+      .navbar-icons {
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="navbar-left">
+      <img src="logo_aduanas.png" alt="Logo Aduanas de Chile">
+      <div class="navbar-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Reserva.html">Reserva</a>
+        <a href="Declaracion.html">Declaración</a>
+        <a href="Pagos.html">Pagos</a>
+        <a href="Tramites.html">Trámites</a>
+        <a href="Documentos.html">Documentos</a>
+      </div>
+    </div>
+    <div class="navbar-icons">
+      <button title="Notificaciones">🔔</button>
+      <button title="Perfil" onclick="window.location.href='perfil.html'">👤</button>
+    </div>
+  </nav>
+
+  <main>
+    <h2>📋 Trámites Realizados</h2>
+
+    <div class="tramites-box">
+      <div class="tramite-fila">
+        <span class="tramite-nombre">Declaración de paso</span>
+        <span class="estado estado-disponible">DISPONIBLE</span>
+      </div>
+      <div class="tramite-fila">
+        <span class="tramite-nombre">Declaración de Equipaje</span>
+        <span class="estado estado-revision">EN REVISIÓN</span>
+      </div>
+    </div>
+
+    <h2>🆕 Solicitar Nuevo Trámite</h2>
+
+    <form id="formTramite" onsubmit="enviarFormulario(event)">
+      <div>
+        <label for="tipo">Tipo de trámite</label>
+        <select id="tipo" name="tipo" required onchange="generarFormulario()">
+          <option value="">-- Selecciona --</option>
+          <option value="menor">Autorización salida de menor</option>
+          <option value="alimentos">Ingreso de alimentos</option>
+          <option value="vehiculo">Salida temporal con vehículo</option>
+          <option value="mascota">Ingreso de mascotas</option>
+        </select>
+      </div>
+
+      <div id="dynamicFields" class="dynamic-fields"></div>
+
+      <button type="submit">Enviar Trámite</button>
+    </form>
+  </main>
+
+  <script>
+    function generarFormulario() {
+      const tipo = document.getElementById("tipo").value;
+      const container = document.getElementById("dynamicFields");
+      container.innerHTML = '';
+
+      if (tipo === "menor") {
+        container.innerHTML = `
+          <label for="nombreMenor">Nombre del menor</label>
+          <input type="text" id="nombreMenor" name="nombreMenor" required>
+
+          <label for="rutMenor">RUT del menor</label>
+          <input type="text" id="rutMenor" name="rutMenor" required>
+
+          <label for="autorizacion">Adjuntar autorización notarial</label>
+          <input type="file" id="autorizacion" name="autorizacion" required>
+        `;
+      }
+
+      if (tipo === "alimentos") {
+        container.innerHTML = `
+          <label for="productos">Productos a declarar</label>
+          <textarea id="productos" name="productos" required></textarea>
+
+          <label for="adjuntoAlimentos">Adjuntar declaración jurada (PDF)</label>
+          <input type="file" id="adjuntoAlimentos" name="adjuntoAlimentos">
+        `;
+      }
+
+      if (tipo === "vehiculo") {
+        container.innerHTML = `
+          <label for="marca">Marca del vehículo</label>
+          <input type="text" id="marca" name="marca" required>
+
+          <label for="patente">Patente</label>
+          <input type="text" id="patente" name="patente" required>
+
+          <label for="adjuntoVehiculo">Adjuntar formulario escaneado</label>
+          <input type="file" id="adjuntoVehiculo" name="adjuntoVehiculo" required>
+        `;
+      }
+
+      if (tipo === "mascota") {
+        container.innerHTML = `
+          <label for="tipoMascota">Tipo de mascota</label>
+          <input type="text" id="tipoMascota" name="tipoMascota" required>
+
+          <label for="edadMascota">Edad de la mascota</label>
+          <input type="number" id="edadMascota" name="edadMascota" required>
+
+          <label for="adjuntoMascota">Adjuntar certificado de vacunación</label>
+          <input type="file" id="adjuntoMascota" name="adjuntoMascota" required>
+        `;
+      }
+    }
+
+    function enviarFormulario(e) {
+      e.preventDefault();
+      alert("✅ Trámite enviado correctamente.");
+      document.getElementById("formTramite").reset();
+      document.getElementById("dynamicFields").innerHTML = "";
+    }
+  </script>
+
+</body>
+</html>
