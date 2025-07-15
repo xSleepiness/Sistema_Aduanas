@@ -1,4 +1,4 @@
-﻿/* Reset y estilos base */
+/* Reset y estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +9,8 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
 }
 
 .container {
@@ -20,11 +21,13 @@ body {
 
 /* Header Superior con logo de Aduanas Chile */
 .top-header {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     height: 120px;
-    position: static; /* Cambiado de relative a static para que no se mueva */
+    position: static;
     overflow: hidden;
     border-bottom: 3px solid #ffd700;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .top-header-content {
@@ -34,7 +37,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #1e3c72;
     padding: 20px 0;
 }
 
@@ -45,13 +48,14 @@ body {
     filter: brightness(1.1) contrast(1.1);
 }
 
-/* Header de navegaciÃ³n */
+/* Header de navegaci�n */
 .header {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    color: #1e3c72;
     padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    position: static; /* Cambiado de fixed a static para que no se mueva */
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    position: static;
     width: 100%;
     z-index: 1000;
 }
@@ -70,12 +74,13 @@ body {
 
 .logo i {
     font-size: 2rem;
-    color: #ffd700;
+    color: #1e3c72;
 }
 
 .logo h1 {
     font-size: 1.5rem;
     font-weight: 600;
+    color: #1e3c72;
 }
 
 .nav ul {
@@ -85,7 +90,7 @@ body {
 }
 
 .nav a {
-    color: white;
+    color: #1e3c72;
     text-decoration: none;
     transition: color 0.3s ease;
     font-weight: 500;
@@ -95,7 +100,7 @@ body {
     color: #ffd700;
 }
 
-/* BotÃ³n de login en navegaciÃ³n */
+/* Botón de login en navegación */
 .login-btn {
     background: #ffd700 !important;
     color: #1e3c72 !important;
@@ -138,8 +143,8 @@ body {
 
 /* Botones */
 .btn-primary {
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    color: #1e3c72;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
@@ -152,18 +157,19 @@ body {
 }
 
 .btn-primary:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: rgba(255, 255, 255, 0.95);
+    color: #1e3c72;
     padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
+    border: 2px solid #1e3c72;
+    border-radius: 25px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     transition: all 0.3s ease;
     cursor: pointer;
     display: inline-flex;
@@ -172,11 +178,12 @@ body {
 }
 
 .btn-secondary:hover {
-    background: #5a6268;
+    background: #1e3c72;
+    color: white;
     transform: translateY(-2px);
 }
 
-/* BotÃ³n de cancelar */
+/* Botón de cancelar */
 .btn-cancel {
     background: #dc3545;
     color: white;
@@ -201,7 +208,7 @@ body {
 /* Servicios */
 .services {
     padding: 80px 0;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .services h2 {
@@ -218,7 +225,7 @@ body {
 }
 
 .service-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 15px;
     text-align: center;
@@ -243,10 +250,10 @@ body {
     font-size: 1.3rem;
 }
 
-/* SecciÃ³n de Turismo */
+/* Sección de Turismo */
 .tourism {
     padding: 80px 0;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .tourism h2 {
@@ -306,7 +313,7 @@ body {
 }
 
 .tourism-card ul li:before {
-    content: 'âœ“';
+    content: '✓';
     color: #28a745;
     font-weight: bold;
     margin-right: 10px;
@@ -343,7 +350,7 @@ body {
 
 /* Calendario */
 .calendar-section, .time-slots-section, .booking-form-section {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
@@ -405,7 +412,7 @@ body {
     border: 1px solid #e9ecef;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .calendar-day:hover {
@@ -458,7 +465,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .time-slot:hover {
@@ -540,7 +547,7 @@ body {
 /* Contacto */
 .contact {
     padding: 80px 0;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .contact h2 {
@@ -655,7 +662,7 @@ body {
 }
 
 .login-modal .modal-body {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     color: #333;
     border-radius: 0 0 15px 15px;
 }
@@ -732,7 +739,7 @@ body {
     color: #424242;
 }
 
-/* Panel de AdministraciÃ³n */
+/* Panel de Administración */
 .admin-panel {
     position: fixed;
     top: 0;
@@ -789,7 +796,7 @@ body {
 
 .admin-sidebar {
     width: 250px;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     border-right: 1px solid #e9ecef;
     padding: 20px 0;
 }
@@ -840,7 +847,7 @@ body {
     font-size: 2rem;
 }
 
-/* Ajustes especÃ­ficos para admin-panel con header superior */
+/* Ajustes específicos para admin-panel con header superior */
 .admin-panel {
     min-height: calc(100vh - 120px);
 }
@@ -868,7 +875,7 @@ body {
 }
 
 .stat-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 25px;
     border-radius: 15px;
     display: flex;
@@ -902,7 +909,7 @@ body {
 /* Tablas de datos */
 .data-table {
     width: 100%;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -927,7 +934,7 @@ body {
 
 /* Actividad reciente */
 .recent-activity {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -956,7 +963,7 @@ body {
 
 /* Configuraciones */
 .setting-group {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 25px;
     border-radius: 15px;
     margin-bottom: 20px;
@@ -997,7 +1004,7 @@ body {
     font-weight: 600;
 }
 
-/* Botones de acciÃ³n */
+/* Botones de acción */
 .action-buttons {
     display: flex;
     gap: 5px;
@@ -1041,11 +1048,12 @@ body {
 }
 
 .user-option {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     padding: 2.5rem;
-    border-radius: 15px;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
     cursor: pointer;
     border: 3px solid transparent;
@@ -1053,13 +1061,13 @@ body {
 
 .user-option:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     border-color: #ffd700;
 }
 
 .user-option i {
     font-size: 4rem;
-    color: #2a5298;
+    color: #1e3c72;
     margin-bottom: 1rem;
 }
 
@@ -1095,7 +1103,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* BotÃ³n de cancelar */
+/* Botón de cancelar */
 .btn-cancel {
     background: #dc3545;
     color: white;
@@ -1186,7 +1194,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* BotÃ³n de volver */
+/* Botón de volver */
 .btn-back {
     background: rgba(255,255,255,0.1) !important;
     padding: 8px 16px !important;
@@ -1200,7 +1208,7 @@ body {
     color: #ffd700 !important;
 }
 
-/* GestiÃ³n de VehÃ­culos */
+/* Gestión de Vehículos */
 .vehicles {
     padding: 80px 0;
     background: #f8f9fa;
@@ -1215,7 +1223,7 @@ body {
 
 .vehicle-form-section,
 .vehicles-list-section {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -1239,7 +1247,7 @@ body {
     min-width: 200px;
 }
 
-/* BotÃ³n de actualizaciÃ³n */
+/* Botón de actualización */
 .btn-refresh {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     color: white;
@@ -1271,7 +1279,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Estados de vehículos y documentos */
+/* Estados de veh�culos y documentos */
 .vehicle-status, .document-status {
     display: inline-block;
     padding: 4px 12px;
@@ -1306,9 +1314,9 @@ body {
     border: 1px solid #bee5eb;
 }
 
-/* Tarjetas de vehículos mejoradas */
+/* Tarjetas de veh�culos mejoradas */
 .vehicle-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -1367,7 +1375,7 @@ body {
 
 /* ==================== ESTILOS PARA SISTEMA DE DOCUMENTOS ==================== */
 
-/* Modales específicos para documentos */
+/* Modales espec�ficos para documentos */
 .large-modal .modal-content {
     width: 90%;
     max-width: 800px;
@@ -1537,7 +1545,7 @@ body {
     cursor: not-allowed;
 }
 
-/* Información de calificación */
+/* Informaci�n de calificaci�n */
 .qualification-info {
     display: flex;
     flex-direction: column;
@@ -1616,7 +1624,7 @@ body {
     color: #28a745;
 }
 
-/* Formulario de calificación */
+/* Formulario de calificaci�n */
 .qualify-form .form-group {
     margin-bottom: 20px;
 }
@@ -1642,7 +1650,7 @@ body {
     color: #6c757d;
 }
 
-/* Paginación de documentos */
+/* Paginaci�n de documentos */
 .table-pagination {
     display: flex;
     justify-content: space-between;

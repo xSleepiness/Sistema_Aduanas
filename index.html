@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Integral de Aduanas - Chile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: #1e3c72;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .main-content {
+            padding: 80px 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .welcome-section h2 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .module-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #1e3c72;
+        }
+
+        .module-card h3 {
+            font-size: 1.8rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .module-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .module-btn {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .module-btn:hover {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 80px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .welcome-section h2 {
+                font-size: 2.2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .module-card {
+                padding: 30px 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h1>Servicio Nacional de Aduanas</h1>
+                        <p class="subtitle">República de Chile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h2>Sistema Integral de Aduanas</h2>
+                <p>Acceda a los diferentes módulos del sistema según su perfil y necesidades. 
+                   Seleccione el módulo correspondiente para continuar.</p>
+            </div>
+
+            <!-- Modules Grid -->
+            <div class="modules-grid">
+                <!-- Módulo Personal -->
+                <div class="module-card" onclick="goToModule('personal')">
+                    <div class="module-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Módulo Personal</h3>
+                    <p>Sistema de reservas de horarios, portal ciudadano y portal administrativo. 
+                       Gestión de citas y servicios para ciudadanos.</p>
+                    <a href="personal/index.html" class="module-btn">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+
+                <!-- Módulo Sistema -->
+                <div class="module-card" onclick="goToModule('sistema')">
+                    <div class="module-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Módulo Sistema</h3>
+                    <p>Monitoreo y estados de servicios de aduana en tiempo real. 
+                       Reportes de rendimiento y gestión técnica del sistema.</p>
+                    <a href="sistema/index.html" class="module-btn">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+
+                <!-- Módulo Viajero -->
+                <div class="module-card" onclick="goToModule('viajero')">
+                    <div class="module-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>Módulo Viajero</h3>
+                    <p>Dashboard para viajeros, declaraciones aduaneras, gestión de documentos 
+                       y servicios específicos para turistas y viajeros.</p>
+                    <a href="viajero/main.html" class="module-btn">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+
+                <!-- Módulo PDI-SAG -->
+                <div class="module-card" onclick="goToModule('pdi-sag')">
+                    <div class="module-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Módulo PDI-SAG</h3>
+                    <p>Sistema de control aduanero para PDI y SAG. 
+                       Herramientas especializadas para inspección y control fronterizo.</p>
+                    <a href="pdi-sag/index.html" class="module-btn">
+                        <i class="fas fa-arrow-right"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 Servicio Nacional de Aduanas - República de Chile</p>
+            <p>Sistema Integral de Gestión Aduanera</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-info-circle"></i> Información</a>
+                <a href="#"><i class="fas fa-phone"></i> Contacto</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacidad</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToModule(module) {
+            // Función para manejar la navegación a los módulos
+            const moduleUrls = {
+                'personal': 'personal/index.html',
+                'sistema': 'sistema/index.html',
+                'viajero': 'viajero/main.html',
+                'pdi-sag': 'pdi-sag/index.html'
+            };
+            
+            if (moduleUrls[module]) {
+                window.location.href = moduleUrls[module];
+            }
+        }
+
+        // Agregar efecto de partículas en el fondo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear elementos de animación de fondo
+            const body = document.body;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.width = '2px';
+                particle.style.height = '2px';
+                particle.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animation = `float ${3 + Math.random() * 4}s ease-in-out infinite`;
+                body.appendChild(particle);
+            }
+        });
+
+        // CSS para la animación de partículas
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+                50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
