@@ -294,23 +294,7 @@ Para reportar bugs, utiliza el [sistema de issues](https://github.com/xSleepines
 4. **Screenshots** (si aplica)
 5. **Información del navegador**
 
-## 📈 Roadmap
-
-### Versión 1.1 (Próximamente)
-- [ ] Integración con APIs reales
-- [ ] Sistema de autenticación avanzado
-- [ ] Base de datos persistente
-- [ ] Notificaciones push
-- [ ] Modo offline
-
-### Versión 1.2 (Futuro)
-- [ ] App móvil nativa
-- [ ] Integración biométrica
-- [ ] IA para autocompletado
-- [ ] Analytics avanzados
-- [ ] API REST completa
-
-## 📄 Licencia
+##  Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
