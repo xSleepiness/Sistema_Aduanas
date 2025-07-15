@@ -9,24 +9,24 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gray-100 min-h-screen">
-<nav class="bg-blue-800 text-white px-4 py-3 shadow">
+<body class="bg-gray-100 min-h-screen" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+<nav class="text-white px-4 py-3 shadow" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
   <ul class="flex flex-wrap gap-4 justify-center">
-    <li><a href="index.html" class="hover:underline font-semibold">Inicio</a></li>
-    <li><a href="rendimiento.html" class="hover:underline">Test Rendimiento</a></li>
-    <li><a href="test-http.html" class="hover:underline">Test HTTPS</a></li>
-    <li><a href="test-sistema-aduanas.html" class="hover:underline">Test API Aduanas</a></li>
-    <li><a href="test-gestion-usuarios.html" class="hover:underline">Test Gestión Usuarios</a></li>
-    <li><a href="generar-reporte.html" class="hover:underline">Reportes de Errores</a></li>
-    <li><a href="test-documentos.html" class="hover:underline">Test Documentos</a></li>
+    <li><a href="index.html" class="hover:underline font-semibold" style="color: #1e3c72;">Inicio</a></li>
+    <li><a href="rendimiento.html" class="hover:underline" style="color: #1e3c72;">Test Rendimiento</a></li>
+    <li><a href="test-http.html" class="hover:underline" style="color: #1e3c72;">Test HTTPS</a></li>
+    <li><a href="test-sistema-aduanas.html" class="hover:underline" style="color: #1e3c72;">Test API Aduanas</a></li>
+    <li><a href="test-gestion-usuarios.html" class="hover:underline" style="color: #1e3c72;">Test Gestión Usuarios</a></li>
+    <li><a href="generar-reporte.html" class="hover:underline" style="color: #1e3c72;">Reportes de Errores</a></li>
+    <li><a href="test-documentos.html" class="hover:underline" style="color: #1e3c72;">Test Documentos</a></li>
   </ul>
 </nav>
-  <header class="bg-blue-900 text-white p-6 shadow">
-    <h1 class="text-3xl font-bold">Estados de Servicios de Aduana en Chile</h1>
-    <p class="mt-2 text-blue-200">Monitoreo en tiempo real de los principales servicios</p>
+  <header class="text-white p-6 shadow" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
+    <h1 class="text-3xl font-bold" style="color: #1e3c72;">Estados de Servicios de Aduana en Chile</h1>
+    <p class="mt-2" style="color: #666;">Monitoreo en tiempo real de los principales servicios</p>
   </header>
 
-  <main class="max-w-4xl mx-auto mt-8 p-4 bg-white rounded shadow">
+  <main class="max-w-4xl mx-auto mt-8 p-4 rounded shadow" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
     <section>
       <h2 class="text-xl font-semibold mb-4">Resumen Gráfico</h2>
       <canvas id="estadoServiciosChart" height="100"></canvas>
@@ -35,7 +35,7 @@
     <section class="mt-8">
       <h2 class="text-xl font-semibold mb-4">Detalle de Servicios</h2>
       <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 rounded">
+        <table class="min-w-full rounded shadow" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);" border border-gray-200 rounded">
           <thead>
             <tr>
               <th class="px-4 py-2 border-b">Servicio</th>
